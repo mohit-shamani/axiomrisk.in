@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1E3A5F" />
+    <!-- NOTE: no static <title> here on purpose. Each route's <Seo /> component
+         injects a unique <title>, description and canonical at build time
+         (vite-react-ssg). A hardcoded title here would be emitted as a second,
+         duplicate <title> in every prerendered page. -->
+    <meta name="apple-mobile-web-app-title" content="AxiomRisk" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

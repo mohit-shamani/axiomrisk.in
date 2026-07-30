@@ -1,0 +1,9 @@
+/* AxiomRisk — stylesheet entry. Import order matters. */
+@import './global.css'; /* also pulls in tokens.css + fonts */
+@import './components.css';
+@import './layout.css';
+@import './hero.css';
+@import './sections.css';
+@import './forms.css';
+@import './pages.css';
+@import './styleguide.css'; /* internal reference page — delete before launch */

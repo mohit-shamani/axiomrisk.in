@@ -1,0 +1,250 @@
+/* ==========================================================================
+   AxiomRisk — Contact page: layout, form controls, details panel
+   ========================================================================== */
+
+/* --- Page layout ------------------------------------------------------ */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1.55fr 0.85fr;
+  gap: clamp(2rem, 1rem + 3vw, 3.5rem);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Form shell ------------------------------------------------------- */
+.form-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  box-shadow: var(--shadow-sm);
+}
+.form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+}
+.form__full {
+  grid-column: 1 / -1;
+}
+@media (max-width: 640px) {
+  .form__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Honeypot — visually and programmatically out of the way, never announced */
+.form__botcheck {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* --- Fields ----------------------------------------------------------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0; /* lets long values shrink instead of forcing overflow */
+}
+.field__label {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-heading);
+  letter-spacing: -0.005em;
+}
+.field__req {
+  color: var(--color-accent);
+  font-weight: var(--fw-bold);
+}
+.field__hint {
+  font-size: var(--fs-xs);
+  color: var(--color-muted);
+  margin-top: -2px;
+}
+.field__error {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--color-error);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 0.8rem 0.95rem;
+  background: var(--color-surface);
+  color: var(--color-heading);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  border: 1px solid var(--ar-border-strong);
+  border-radius: var(--radius-md);
+  transition: border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-muted);
+}
+
+/* Slate focus ring */
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.16);
+}
+
+.field--invalid .input,
+.field--invalid .select,
+.field--invalid .textarea {
+  border-color: var(--color-error);
+  background: var(--color-error-bg);
+}
+.field--invalid .input:focus,
+.field--invalid .select:focus,
+.field--invalid .textarea:focus {
+  box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.15);
+}
+
+.textarea {
+  min-height: 9.5rem;
+  resize: vertical;
+}
+
+/* Custom select chevron (inline SVG data URI, slate grey) */
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.6rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 8l5 5 5-5' stroke='%2355606E' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  cursor: pointer;
+}
+
+/* --- Submit row ------------------------------------------------------- */
+.form__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+}
+.form__required-note {
+  font-size: var(--fs-xs);
+  color: var(--color-muted);
+}
+.btn:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- Result messages -------------------------------------------------- */
+.form-result {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+.form-result--success {
+  margin-top: 0;
+  color: var(--ar-emerald-600);
+  background: var(--ar-emerald-100);
+  border: 1px solid rgba(31, 122, 92, 0.28);
+  font-size: var(--fs-body);
+}
+.form-result--success svg {
+  flex: none;
+  margin-top: 0.15em;
+  color: var(--color-accent);
+}
+.form-result--error {
+  color: var(--color-error);
+  background: var(--color-error-bg);
+  border: 1px solid rgba(179, 38, 30, 0.25);
+}
+.form-result--error a {
+  color: inherit;
+  text-decoration: underline;
+  font-weight: var(--fw-semibold);
+  overflow-wrap: anywhere;
+}
+
+/* --- Contact details panel -------------------------------------------- */
+.contact-details {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 1rem + 1.5vw, 2rem);
+}
+.contact-details__title {
+  font-size: var(--fs-h4);
+  margin-bottom: var(--space-5);
+}
+.contact-details__list {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+}
+.contact-details__row dt {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-2);
+}
+.contact-details__row dd {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+.contact-details__row a {
+  font-weight: var(--fw-medium);
+}
+
+/* --- Confidentiality band --------------------------------------------- */
+.confidentiality {
+  background: var(--color-bg-alt);
+  border-block: 1px solid var(--color-border);
+  padding-block: var(--space-6);
+}
+.confidentiality__inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-4);
+  max-width: 62rem;
+  margin-inline: auto;
+  text-align: left;
+}
+.confidentiality__inner svg {
+  flex: none;
+  margin-top: 0.1em;
+  color: var(--color-accent);
+}
+.confidentiality__inner p {
+  font-size: var(--fs-sm);
+  color: var(--color-text);
+  max-width: 70ch;
+}

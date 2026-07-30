@@ -1,0 +1,135 @@
+/* ==========================================================================
+   AxiomRisk — Design Tokens
+   Single source of truth for colour, type, spacing, radius, shadow, motion.
+   Reference tokens (--ar-*) map to semantic tokens used across components.
+   ========================================================================== */
+
+:root {
+  /* --- Brand palette ---------------------------------------------------- */
+  --ar-slate-blue: #1e3a5f; /* Primary — Deep Slate Blue           */
+  --ar-slate-blue-600: #2a4d78; /* hover / lighter primary          */
+  --ar-slate-blue-900: #16304f; /* pressed / deeper primary         */
+  --ar-emerald: #1f7a5c; /* Accent — Emerald Green                 */
+  --ar-emerald-600: #1a6750; /* accent hover / pressed             */
+  --ar-emerald-300: #4fbf97; /* lightened accent for DARK surfaces */
+  --ar-emerald-100: #dcefe7; /* accent tint (selection, underlines)*/
+
+  --ar-offwhite: #f7f8fa; /* Page background                       */
+  --ar-grey-blue: #eef1f5; /* Section alt background               */
+  --ar-ink: #14202e; /* Headings — Deep ink                      */
+  --ar-slate-grey: #55606e; /* Body text                          */
+  --ar-slate-grey-400: #7c8593; /* muted / captions               */
+
+  --ar-white: #ffffff;
+  --ar-border: #e2e6ec; /* hairline borders                       */
+  --ar-border-strong: #d2d8e0;
+
+  /* --- Semantic colour -------------------------------------------------- */
+  --color-primary: var(--ar-slate-blue);
+  --color-primary-hover: var(--ar-slate-blue-600);
+  --color-accent: var(--ar-emerald);
+  --color-accent-hover: var(--ar-emerald-600);
+  /* Emerald is dark; on navy surfaces it fails contrast, so dark surfaces
+     use the lightened step instead. Applied automatically — see layout.css. */
+  --color-accent-on-dark: var(--ar-emerald-300);
+
+  --color-bg: var(--ar-offwhite);
+  --color-bg-alt: var(--ar-grey-blue);
+  --color-surface: var(--ar-white);
+
+  --color-heading: var(--ar-ink);
+  --color-text: var(--ar-slate-grey);
+  --color-muted: var(--ar-slate-grey-400);
+  --color-border: var(--ar-border);
+
+  /* Form validation. Deep red — 7:1 on the page background, and distinguishable
+     from the emerald accent for red/green colour-blind users because errors are
+     always paired with text, never colour alone. */
+  --color-error: #b3261e;
+  --color-error-bg: #fdf0ef;
+
+  /* On dark (primary) surfaces */
+  --color-on-primary: #eaf0f7;
+  --color-on-primary-muted: #a9bcd2;
+
+  /* --- Typography ------------------------------------------------------- */
+  /* Single-family system: Inter for headings and body. Hierarchy is carried
+     by weight, size and tracking rather than by contrasting typefaces —
+     the approach used by most top-tier consulting firms. */
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+  --font-heading: var(--font-body);
+
+  /* Fluid type scale (clamp: min, preferred vw, max) — major-third-ish */
+  --fs-display: clamp(2.6rem, 1.6rem + 4.4vw, 4.5rem);
+  --fs-h1: clamp(2.1rem, 1.5rem + 2.6vw, 3.25rem);
+  --fs-h2: clamp(1.7rem, 1.3rem + 1.7vw, 2.5rem);
+  --fs-h3: clamp(1.3rem, 1.1rem + 0.9vw, 1.6rem);
+  --fs-h4: clamp(1.1rem, 1rem + 0.4vw, 1.25rem);
+  --fs-lead: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+  --fs-body: 1.0625rem; /* 17px base for readability */
+  --fs-sm: 0.9375rem;
+  --fs-xs: 0.8125rem;
+
+  --lh-tight: 1.12;
+  --lh-heading: 1.18;
+  --lh-body: 1.7;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Bold sans headings need tighter tracking than a serif would */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  --tracking-caps: 0.14em; /* eyebrow / overline labels */
+
+  /* --- Spacing scale (8pt base) ----------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* Vertical rhythm for section padding (generous, responsive) */
+  --section-y: clamp(4rem, 3rem + 6vw, 8rem);
+
+  /* --- Layout ----------------------------------------------------------- */
+  --container-max: 1200px;
+  --container-wide: 1320px;
+  --container-narrow: 760px;
+  --gutter: clamp(1.25rem, 0.5rem + 3vw, 2.5rem);
+  --header-h: 76px;
+
+  /* --- Radius ----------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  /* --- Elevation (soft, corporate — never heavy) ------------------------ */
+  --shadow-xs: 0 1px 2px rgba(20, 32, 46, 0.04);
+  --shadow-sm: 0 2px 8px rgba(20, 32, 46, 0.05);
+  --shadow-md: 0 10px 30px rgba(20, 32, 46, 0.07);
+  --shadow-lg: 0 24px 60px rgba(20, 32, 46, 0.1);
+  --ring: 0 0 0 3px rgba(30, 58, 95, 0.18);
+
+  /* --- Motion ----------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-med: 260ms;
+  --dur-slow: 600ms;
+
+  --z-header: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+}

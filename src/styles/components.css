@@ -1,0 +1,220 @@
+/* ==========================================================================
+   AxiomRisk — Shared component styles (layout primitives + UI kit)
+   ========================================================================== */
+
+/* --- Container -------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.container--wide {
+  max-width: var(--container-wide);
+}
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+/* --- Section ---------------------------------------------------------- */
+.section {
+  padding-block: var(--section-y);
+}
+.section--alt {
+  background: var(--color-bg-alt);
+}
+.section--primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.section--primary h1,
+.section--primary h2,
+.section--primary h3 {
+  color: var(--color-on-primary);
+}
+.section--tight {
+  padding-block: calc(var(--section-y) * 0.6);
+}
+
+/* Section heading block */
+.section-head {
+  max-width: 56ch;
+  margin-bottom: var(--space-7);
+}
+.section-head--center {
+  margin-inline: auto;
+  text-align: center;
+}
+.section-head p {
+  margin-top: var(--space-4);
+}
+
+/* --- Buttons ---------------------------------------------------------- */
+.btn {
+  --btn-bg: var(--color-primary);
+  --btn-fg: var(--color-on-primary);
+  --btn-bd: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.01em;
+  line-height: 1;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-bd);
+  transition: transform var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+  will-change: transform;
+}
+.btn:hover {
+  color: var(--btn-fg);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  --btn-bg: var(--color-primary);
+  --btn-fg: var(--color-on-primary);
+}
+.btn--primary:hover {
+  --btn-bg: var(--color-primary-hover);
+}
+
+.btn--accent {
+  --btn-bg: var(--color-accent);
+  --btn-fg: #fff;
+}
+.btn--accent:hover {
+  --btn-bg: var(--color-accent-hover);
+}
+
+.btn--outline {
+  --btn-bg: transparent;
+  --btn-fg: var(--color-primary);
+  --btn-bd: var(--ar-border-strong);
+}
+.btn--outline:hover {
+  --btn-bg: var(--color-surface);
+  --btn-bd: var(--color-primary);
+}
+
+/* Outline on dark surfaces */
+.btn--ghost-light {
+  --btn-bg: transparent;
+  --btn-fg: var(--color-on-primary);
+  --btn-bd: rgba(234, 240, 247, 0.35);
+}
+.btn--ghost-light:hover {
+  --btn-bg: rgba(255, 255, 255, 0.08);
+  --btn-fg: #fff;
+}
+
+.btn--lg {
+  padding: 1rem 1.85rem;
+  font-size: var(--fs-body);
+}
+
+/* Text link with animated underline / arrow */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm);
+  color: var(--color-primary);
+}
+.link-arrow svg {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.link-arrow:hover svg {
+  transform: translateX(4px);
+}
+
+/* --- Card (equal-height by default via grid + flex) ------------------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  transition: transform var(--dur-med) var(--ease-out),
+    box-shadow var(--dur-med) var(--ease-out),
+    border-color var(--dur-med) var(--ease-out);
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--ar-border-strong);
+}
+.card__title {
+  font-size: var(--fs-h4);
+  margin-bottom: var(--space-3);
+}
+.card__body {
+  color: var(--color-text);
+  font-size: var(--fs-sm);
+}
+.card__foot {
+  margin-top: auto;
+  padding-top: var(--space-5);
+}
+
+/* Grid that keeps every card the same height */
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+.grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 900px) {
+  .grid--3,
+  .grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .grid--2,
+  .grid--3,
+  .grid--4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Placeholder page scaffold (temporary) ---------------------------- */
+.page-stub {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+.page-stub__tag {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.35rem 0.9rem;
+  margin-top: var(--space-5);
+}
