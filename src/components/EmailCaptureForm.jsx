@@ -1,11 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CONTACT_EMAIL } from '../config/site'
-
-const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
-const ENDPOINT = 'https://api.web3forms.com/submit'
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+import { isValidEmail, normaliseEmail } from '../lib/validation'
+import { submitToWeb3Forms, failureMessage } from '../lib/web3forms'
 
 /**
  * Compact email capture wired to Web3Forms.
@@ -28,45 +25,43 @@ export default function EmailCaptureForm({
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
   const [botcheck, setBotcheck] = useState('')
-  const [error, setError] = useState('')
-  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+  const [error, setError] = useState('') // validation only
+  const [failure, setFailure] = useState(null) // submission only
+  const [status, setStatus] = useState('idle') // idle | submitting | success
 
   async function handleSubmit(event) {
     event.preventDefault()
+    setFailure(null)
 
-    if (!email.trim()) return setError('Please enter your work email.')
-    if (!EMAIL_RE.test(email.trim())) return setError('Please enter a valid email address.')
+    const cleaned = normaliseEmail(email)
+
+    // --- validation errors: shown inline against the field ---------------
+    if (!cleaned) {
+      setError('Please enter your work email.')
+      return
+    }
+    if (!isValidEmail(cleaned)) {
+      setError('Please enter a valid email address, for example name@company.com.')
+      return
+    }
     setError('')
 
-    if (!ACCESS_KEY) {
-      if (import.meta.env.DEV) {
-        console.warn(
-          '[AxiomRisk] VITE_WEB3FORMS_ACCESS_KEY is not set. ' +
-            'Copy .env.example to .env, add your key, then rebuild.'
-        )
-      }
-      return setStatus('error')
-    }
-
+    // --- submission: failures are reported separately from validation ----
     setStatus('submitting')
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: ACCESS_KEY,
-          subject,
-          from_name: 'AxiomRisk website',
-          'Work Email': email,
-          Company: company || '—',
-          ...extraFields,
-          botcheck,
-        }),
-      })
-      const data = await res.json()
-      setStatus(res.ok && data.success ? 'success' : 'error')
-    } catch {
-      setStatus('error')
+    const result = await submitToWeb3Forms({
+      subject,
+      from_name: 'AxiomRisk website',
+      'Work Email': cleaned,
+      Company: company.trim() || '—',
+      ...extraFields,
+      botcheck,
+    })
+
+    if (result.ok) {
+      setStatus('success')
+    } else {
+      setStatus('idle')
+      setFailure(result.kind)
     }
   }
 
@@ -91,6 +86,8 @@ export default function EmailCaptureForm({
     )
   }
 
+  const failureCopy = failure ? failureMessage(failure, CONTACT_EMAIL) : null
+
   return (
     <form className="capture" onSubmit={handleSubmit} noValidate>
       <input
@@ -109,16 +106,22 @@ export default function EmailCaptureForm({
           </label>
           <input
             id={`${idPrefix}-email`}
+            name="email"
             type="email"
+            inputMode="email"
             className="input"
             value={email}
             autoComplete="email"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck="false"
             aria-required="true"
             aria-invalid={error ? 'true' : undefined}
             aria-describedby={error ? `${idPrefix}-email-error` : undefined}
             onChange={(e) => {
               setEmail(e.target.value)
               if (error) setError('')
+              if (failure) setFailure(null)
             }}
           />
           {error && (
@@ -131,6 +134,7 @@ export default function EmailCaptureForm({
             <label className="field__label" htmlFor={`${idPrefix}-company`}>Company</label>
             <input
               id={`${idPrefix}-company`}
+              name="company"
               type="text"
               className="input"
               value={company}
@@ -151,10 +155,10 @@ export default function EmailCaptureForm({
       </p>
 
       <div role="status" aria-live="polite">
-        {status === 'error' && (
+        {failureCopy && (
           <p className="form-result form-result--error">
-            Something went wrong. Please email us directly at{' '}
-            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+            <strong>{failureCopy.lead}</strong> {failureCopy.detail}{' '}
+            <a href={`mailto:${failureCopy.email}`}>{failureCopy.email}</a>.
           </p>
         )}
       </div>

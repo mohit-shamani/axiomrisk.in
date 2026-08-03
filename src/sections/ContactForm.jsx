@@ -1,11 +1,8 @@
 import { useRef, useState } from 'react'
 import { CONTACT_EMAIL } from '../config/site'
 import { contactTopics } from '../config/content'
-
-// Public by design: a Web3Forms access key only permits submissions to the
-// inbox it was issued for, so it is safe to ship in the client bundle.
-const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
-const ENDPOINT = 'https://api.web3forms.com/submit'
+import { isValidEmail, normaliseEmail } from '../lib/validation'
+import { submitToWeb3Forms, failureMessage } from '../lib/web3forms'
 
 const EMPTY = {
   name: '',
@@ -21,9 +18,9 @@ const EMPTY = {
 function validate(v) {
   const e = {}
   if (!v.name.trim()) e.name = 'Please enter your full name.'
-  if (!v.email.trim()) e.email = 'Please enter your work email.'
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email.trim()))
-    e.email = 'Please enter a valid email address.'
+  if (!normaliseEmail(v.email)) e.email = 'Please enter your work email.'
+  else if (!isValidEmail(v.email))
+    e.email = 'Please enter a valid email address, for example name@company.com.'
   if (!v.company.trim()) e.company = 'Please enter your company or organisation.'
   if (!v.topic) e.topic = 'Please choose what you would like to discuss.'
   if (!v.message.trim()) e.message = 'Please tell us a little about your enquiry.'
@@ -32,18 +29,21 @@ function validate(v) {
 
 export default function ContactForm() {
   const [values, setValues] = useState(EMPTY)
-  const [errors, setErrors] = useState({})
-  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+  const [errors, setErrors] = useState({}) // per-field validation
+  const [failure, setFailure] = useState(null) // submission failure kind
+  const [status, setStatus] = useState('idle') // idle | submitting | success
   const formRef = useRef(null)
 
   const update = (field) => (event) => {
     setValues((v) => ({ ...v, [field]: event.target.value }))
     // Clear a field's error as soon as the user starts correcting it
     setErrors((e) => (e[field] ? { ...e, [field]: undefined } : e))
+    if (failure) setFailure(null)
   }
 
   async function handleSubmit(event) {
     event.preventDefault()
+    setFailure(null)
 
     const found = validate(values)
     setErrors(found)
@@ -54,46 +54,26 @@ export default function ContactForm() {
       return
     }
 
-    if (!ACCESS_KEY) {
-      // Misconfiguration — surface the same fallback rather than failing silently
-      if (import.meta.env.DEV) {
-        console.warn(
-          '[AxiomRisk] VITE_WEB3FORMS_ACCESS_KEY is not set. ' +
-            'Copy .env.example to .env and add your Web3Forms key.'
-        )
-      }
-      setStatus('error')
-      return
-    }
-
     setStatus('submitting')
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: ACCESS_KEY,
-          subject: `New enquiry — ${values.topic} — ${values.name}`,
-          from_name: 'AxiomRisk website',
-          'Full Name': values.name,
-          'Work Email': values.email,
-          'Company / Organisation': values.company,
-          Phone: values.phone || '—',
-          Role: values.role || '—',
-          'Discussion Topic': values.topic,
-          Message: values.message,
-          botcheck: values.botcheck,
-        }),
-      })
-      const data = await res.json()
-      if (res.ok && data.success) {
-        setStatus('success')
-        setValues(EMPTY)
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
+    const result = await submitToWeb3Forms({
+      subject: `New enquiry — ${values.topic} — ${values.name}`,
+      from_name: 'AxiomRisk website',
+      'Full Name': values.name.trim(),
+      'Work Email': normaliseEmail(values.email),
+      'Company / Organisation': values.company.trim(),
+      Phone: values.phone.trim() || '—',
+      Role: values.role.trim() || '—',
+      'Discussion Topic': values.topic,
+      Message: values.message.trim(),
+      botcheck: values.botcheck,
+    })
+
+    if (result.ok) {
+      setStatus('success')
+      setValues(EMPTY)
+    } else {
+      setStatus('idle')
+      setFailure(result.kind)
     }
   }
 
@@ -237,12 +217,15 @@ export default function ContactForm() {
         </div>
 
         <div role="status" aria-live="polite">
-          {status === 'error' && (
-            <p className="form-result form-result--error">
-              Something went wrong. Please email us directly at{' '}
-              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-            </p>
-          )}
+          {failure && (() => {
+            const copy = failureMessage(failure, CONTACT_EMAIL)
+            return (
+              <p className="form-result form-result--error">
+                <strong>{copy.lead}</strong> {copy.detail}{' '}
+                <a href={`mailto:${copy.email}`}>{copy.email}</a>.
+              </p>
+            )
+          })()}
         </div>
       </form>
     </div>
