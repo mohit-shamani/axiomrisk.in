@@ -39,10 +39,10 @@ Concentration appears in more places than most businesses check:
 - **Systems** — a platform that several critical processes now route through
 - **Banking and credit** — facilities concentrated with a single institution
 
-**What to do.** List your top five in each category and ask a single question of each:
-if this disappeared for a month, what would happen? You are not trying to eliminate
-concentration — that is often uneconomic. You are trying to know where it sits, so it
-becomes an accepted position rather than an unexamined one.
+**What to do.** List your top five in each category and ask one question of each: if
+this disappeared for a month, what would happen? You are not trying to eliminate
+concentration — that is often uneconomic — but to know where it sits, so it becomes an
+accepted position rather than an unexamined one.
 
 ## 2. Key-person dependency
 
@@ -139,14 +139,15 @@ operations, because that is precisely where the assumptions feel normal. A perio
 step back tends to surface them more reliably than continuous monitoring does.
 
 If you want a structured way to work through this, our [approach to risk
-assessment](/approach) sets out how we map exposure across functions and prioritise
-what actually matters. For a focused look at one area, our [operational risk advisory
-services](/services) cover process reviews, supplier dependency assessment and single
-points of failure.
+assessment](/approach) sets out how we map exposure and prioritise what matters, and
+our [operational risk advisory services](/services) cover process reviews, supplier
+dependency assessment and single points of failure.
 
-The practical starting point is smaller than either: pick the one item above that made
-you least comfortable, and spend an hour establishing the facts. If the answer is
-reassuring, you have lost an hour. If it is not, you have found something worth
-knowing while you still have time to act on it.
+For a faster starting point, our free [two-minute risk health check](/risk-health-check)
+covers several of these areas and gives an indicative view of where to look first.
+
+Or start smaller still: pick the item above that made you least comfortable and spend
+an hour establishing the facts. If the answer is reassuring, you have lost an hour. If
+it is not, you have found something worth knowing while you still have time to act.
 
 {{ADD SOURCE: any Indian-context operational risk research or industry data worth citing}}
