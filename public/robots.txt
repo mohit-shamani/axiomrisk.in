@@ -1,4 +1,61 @@
+# AxiomRisk — https://axiomrisk.in
+# All search engines are welcome.
+
 User-agent: *
+Allow: /
+Disallow: /styleguide
+
+# ---------------------------------------------------------------------------
+# AI / answer-engine crawlers.
+#
+# Explicitly allowed so the firm's insights can be cited in AI-generated
+# answers (AEO). Remove or set to Disallow if the position on AI training or
+# retrieval changes.
+# ---------------------------------------------------------------------------
+
+# OpenAI — ChatGPT browsing and search
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic — Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Google — Gemini / AI Overviews (separate from Googlebot indexing)
+User-agent: Google-Extended
+Allow: /
+
+# Common Crawl — feeds many downstream models
+User-agent: CCBot
+Allow: /
+
+# Apple, Amazon, Meta
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
 Allow: /
 
 Sitemap: https://axiomrisk.in/sitemap.xml

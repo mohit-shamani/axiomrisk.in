@@ -177,8 +177,9 @@
   width: 100%;
 }
 
-/* Header responsive switch */
-@media (max-width: 880px) {
+/* Header responsive switch. Raised from 880px when Resources became the
+   sixth nav item — six links plus the CTA crowd below ~1000px. */
+@media (max-width: 1000px) {
   .header__nav,
   .header__cta {
     display: none;

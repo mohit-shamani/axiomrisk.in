@@ -5,5 +5,7 @@
 @import './hero.css';
 @import './sections.css';
 @import './forms.css';
+@import './insights.css';
+@import './assessment.css';
 @import './pages.css';
 @import './styleguide.css'; /* internal reference page — delete before launch */

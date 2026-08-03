@@ -40,11 +40,25 @@ export const seo = {
     path: '/about',
   },
   insights: {
-    title: `Insights${titleSuffix}`,
+    title: 'Insights | Risk Management Perspectives — AxiomRisk',
     description:
-      'Perspectives, frameworks and research on enterprise risk, governance ' +
-      'and resilience from the AxiomRisk team.',
+      'Practical insights on risk management, compliance and resilience for ' +
+      'businesses in India — enterprise risk, operational risk, continuity and strategy.',
     path: '/insights',
+  },
+  resources: {
+    title: 'Free Risk Management Resources | AxiomRisk',
+    description:
+      'Free practical tools and templates for managing business risk — including ' +
+      'a risk health check and a risk register template.',
+    path: '/resources',
+  },
+  riskHealthCheck: {
+    title: 'Free Business Risk Health Check | AxiomRisk',
+    description:
+      'A free two-minute self-assessment of your business risk exposure across ' +
+      'operations, compliance, continuity and strategy.',
+    path: '/risk-health-check',
   },
   contact: {
     title: 'Contact AxiomRisk | Book a Risk Advisory Consultation',

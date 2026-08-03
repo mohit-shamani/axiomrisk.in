@@ -4,7 +4,11 @@ import Services from './pages/Services'
 import Approach from './pages/Approach'
 import About from './pages/About'
 import Insights from './pages/Insights'
+import InsightArticle from './pages/InsightArticle'
+import { getPostStaticPaths } from './lib/posts'
 import Contact from './pages/Contact'
+import Resources from './pages/Resources'
+import RiskHealthCheck from './pages/RiskHealthCheck'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import NotFound from './pages/NotFound'
@@ -24,7 +28,17 @@ export const routes = [
       { path: 'approach', element: <Approach /> },
       { path: 'about', element: <About /> },
       { path: 'insights', element: <Insights /> },
+      {
+        // Every published article is prerendered to its own .html file.
+        // getStaticPaths is derived from the markdown files themselves, so
+        // adding a post is enough — no route edits required.
+        path: 'insights/:slug',
+        element: <InsightArticle />,
+        getStaticPaths: getPostStaticPaths,
+      },
       { path: 'contact', element: <Contact /> },
+      { path: 'resources', element: <Resources /> },
+      { path: 'risk-health-check', element: <RiskHealthCheck /> },
       { path: 'privacy', element: <Privacy /> },
       { path: 'terms', element: <Terms /> },
       // Internal design reference — noindex, unlinked. Remove before launch.

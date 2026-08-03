@@ -6,6 +6,8 @@ import ApproachSection from '../sections/ApproachSection'
 import WhyUs from '../sections/WhyUs'
 import Industries from '../sections/Industries'
 import Faq from '../sections/Faq'
+import LatestInsights from '../sections/LatestInsights'
+import RiskCheckPromo from '../sections/RiskCheckPromo'
 import FinalCta from '../sections/FinalCta'
 import { seo } from '../config/seo'
 
@@ -20,6 +22,8 @@ export default function Home() {
       <WhyUs />
       <Industries />
       <Faq />
+      <LatestInsights />
+      <RiskCheckPromo />
       <FinalCta />
     </>
   )

@@ -2,6 +2,8 @@ import Seo from '../components/Seo'
 import PageIntro from '../components/PageIntro'
 import ServiceDetailBlocks from '../sections/ServiceDetailBlocks'
 import EngagementModels from '../sections/EngagementModels'
+import RelatedReading from '../sections/RelatedReading'
+import RiskCheckPromo from '../sections/RiskCheckPromo'
 import FinalCta from '../sections/FinalCta'
 import { seo } from '../config/seo'
 
@@ -18,6 +20,10 @@ export default function Services() {
 
       <ServiceDetailBlocks />
       <EngagementModels />
+
+      <RiskCheckPromo variant="default" />
+
+      <RelatedReading categories={['Enterprise Risk', 'Compliance', 'Continuity']} />
 
       <FinalCta
         title="Not Sure Where to Start?"

@@ -80,10 +80,45 @@ type scale, components and all four hero visual options.
 | `/about` | ✅ built |
 | `/approach` | ✅ built |
 | `/contact` | ✅ built (form wired to Web3Forms) |
-| `/insights` | placeholder |
+| `/insights` | ✅ listing with category filter |
+| `/insights/:slug` | ✅ prerendered per article (markdown) |
+| `/resources` | ✅ built |
+| `/risk-health-check` | ✅ built (interactive self-assessment) |
 | `/privacy` | placeholder |
 | `/terms` | placeholder |
 | `/styleguide` | internal — delete before launch |
+
+### Adding an insights article
+
+1. Create `src/content/insights/your-slug.md`
+2. Add frontmatter — `title`, `slug`, `metaDescription`, `category`, `author`,
+   `date` (`YYYY-MM-DD`), `readTime`, `featuredImage`, `excerpt`, `draft`
+3. Write the body in markdown (`##` / `###` for structure)
+4. `npm run build`
+
+That's it. The route, prerendered HTML, Article + BreadcrumbList schema, the
+listing card, "Latest Insights" on the homepage, related-post links and the
+sitemap entry are all derived from the file. No code changes needed.
+
+`category` must be one of: `Enterprise Risk`, `Operational`, `Compliance`,
+`Continuity`, `Strategy` (see `CATEGORIES` in `src/lib/posts.js`). Set
+`draft: true` to keep a post out of the build.
+
+**Article images** — optional. Leave `featuredImage: ""` and an abstract branded
+cover renders, varied by category. For a real photo, put the file in
+`public/images/insights/` and set
+`featuredImage: "/images/insights/your-file.jpg"`.
+
+### Downloadable resources
+
+The risk register template offered on `/resources` is **not in the repo**. Add it at:
+
+```
+public/downloads/axiomrisk-risk-register-template.xlsx
+```
+
+Change the filename or format in `src/config/resources.js` if needed. Until the
+file exists, the post-signup download link will 404 (the email still captures).
 
 Switch the hero visual with one line in `src/config/site.js`:
 
@@ -111,8 +146,9 @@ required. If your host adds one, make sure it does not shadow the static files.
 - [ ] Replace `CONTACT_EMAIL` in `src/config/site.js`
 - [ ] Add `VITE_WEB3FORMS_ACCESS_KEY` locally **and** on the host, then rebuild
 - [ ] Confirm or remove the LinkedIn URL
-- [ ] Build out `/insights`, `/privacy`, `/terms`
-- [ ] Generate `sitemap.xml` (`public/robots.txt` already references it)
+- [ ] Add `public/downloads/axiomrisk-risk-register-template.xlsx`
+- [ ] Build out `/privacy` and `/terms`
+- [ ] Fill the `{{ADD SOURCE: …}}` placeholders in the insights articles
 - [ ] Add an Open Graph image at `public/og-default.png`
 - [ ] Delete `/styleguide` (`src/pages/Styleguide.jsx`, its route, `styles/styleguide.css`)
 - [ ] Remove unused hero visuals if you have settled on one

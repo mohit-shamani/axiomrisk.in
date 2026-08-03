@@ -1,0 +1,7 @@
+Place downloadable resource files here.
+
+Expected by src/config/resources.js:
+  axiomrisk-risk-register-template.xlsx
+
+Files in public/ are copied to the site root at build time, so this file
+becomes available at /downloads/axiomrisk-risk-register-template.xlsx

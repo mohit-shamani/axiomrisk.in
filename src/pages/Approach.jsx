@@ -4,6 +4,7 @@ import MethodBlocks from '../sections/MethodBlocks'
 import WhyItWorks from '../sections/WhyItWorks'
 import WhatToExpect from '../sections/WhatToExpect'
 import Faq from '../sections/Faq'
+import RelatedReading from '../sections/RelatedReading'
 import FinalCta from '../sections/FinalCta'
 import { seo } from '../config/seo'
 import { approachFaqs } from '../config/content'
@@ -24,6 +25,8 @@ export default function Approach() {
       <WhatToExpect />
 
       <Faq items={approachFaqs} />
+
+      <RelatedReading categories={['Enterprise Risk', 'Operational', 'Strategy']} />
 
       <FinalCta
         title="Start With a Conversation"
