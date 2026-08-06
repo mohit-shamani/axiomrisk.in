@@ -189,6 +189,21 @@
   overflow-wrap: anywhere;
 }
 
+/* Development-only configuration notice — deliberately not styled as an
+   error, because nothing is broken; the key is simply absent. */
+.form-result--config {
+  display: block;
+  color: var(--color-heading);
+  background: var(--color-bg-alt);
+  border: 1px dashed var(--ar-border-strong);
+  border-left: 3px solid var(--color-accent);
+}
+.form-result--config strong {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--color-accent);
+}
+
 /* --- Contact details panel -------------------------------------------- */
 .contact-details {
   background: var(--color-bg-alt);

@@ -156,9 +156,14 @@ export default function EmailCaptureForm({
 
       <div role="status" aria-live="polite">
         {failureCopy && (
-          <p className="form-result form-result--error">
-            <strong>{failureCopy.lead}</strong> {failureCopy.detail}{' '}
-            <a href={`mailto:${failureCopy.email}`}>{failureCopy.email}</a>.
+          <p className={`form-result form-result--${failureCopy.variant}`}>
+            <strong>{failureCopy.lead}</strong> {failureCopy.detail}
+            {failureCopy.email && (
+              <>
+                {' '}
+                <a href={`mailto:${failureCopy.email}`}>{failureCopy.email}</a>.
+              </>
+            )}
           </p>
         )}
       </div>

@@ -220,9 +220,14 @@ export default function ContactForm() {
           {failure && (() => {
             const copy = failureMessage(failure, CONTACT_EMAIL)
             return (
-              <p className="form-result form-result--error">
-                <strong>{copy.lead}</strong> {copy.detail}{' '}
-                <a href={`mailto:${copy.email}`}>{copy.email}</a>.
+              <p className={`form-result form-result--${copy.variant}`}>
+                <strong>{copy.lead}</strong> {copy.detail}
+                {copy.email && (
+                  <>
+                    {' '}
+                    <a href={`mailto:${copy.email}`}>{copy.email}</a>.
+                  </>
+                )}
               </p>
             )
           })()}

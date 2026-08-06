@@ -77,22 +77,39 @@ export async function submitToWeb3Forms(fields) {
   return { ok: false, kind: 'api', status: res.status, message: data?.message }
 }
 
-/** User-facing copy for each failure mode. */
+/**
+ * User-facing copy for each failure mode.
+ *
+ * A missing key is a build/config problem, not something a visitor can act on
+ * — so in production it stays behind the same graceful message as an API
+ * error. In development it says so plainly and on screen, because otherwise
+ * "no key" is indistinguishable from "the form is broken".
+ */
 export function failureMessage(kind, contactEmail) {
-  switch (kind) {
-    case 'network':
-      return {
-        lead: "We couldn't reach our server.",
-        detail: `Please check your connection and try again, or email us directly at`,
-        email: contactEmail,
-      }
-    case 'config':
-    case 'api':
-    default:
-      return {
-        lead: 'Something went wrong.',
-        detail: 'Please email us directly at',
-        email: contactEmail,
-      }
+  if (kind === 'config' && import.meta.env.DEV) {
+    return {
+      variant: 'config',
+      lead: 'Form not configured — this notice only appears in development.',
+      detail:
+        'Your email was accepted; the submission was not sent because ' +
+        'VITE_WEB3FORMS_ACCESS_KEY is missing. Add it to .env and restart the dev server.',
+      email: null,
+    }
+  }
+
+  if (kind === 'network') {
+    return {
+      variant: 'error',
+      lead: "We couldn't reach our server.",
+      detail: 'Please check your connection and try again, or email us directly at',
+      email: contactEmail,
+    }
+  }
+
+  return {
+    variant: 'error',
+    lead: 'Something went wrong.',
+    detail: 'Please email us directly at',
+    email: contactEmail,
   }
 }
