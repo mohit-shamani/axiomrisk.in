@@ -1,4 +1,4 @@
-# AxiomRisk — https://axiomrisk.in
+# AxiomRisk — https://axiomrisk.co
 # All search engines are welcome.
 
 User-agent: *
@@ -58,4 +58,4 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
-Sitemap: https://axiomrisk.in/sitemap.xml
+Sitemap: https://axiomrisk.co/sitemap.xml

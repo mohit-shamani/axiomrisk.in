@@ -18,7 +18,10 @@ export const site = {
     'AxiomRisk is a B2B risk advisory and management consulting firm helping ' +
     'Indian businesses anticipate, quantify and manage enterprise risk with ' +
     'clarity and precision.',
-  url: 'https://axiomrisk.in',
+  // Production origin. Single source of truth — canonicals, Open Graph,
+  // JSON-LD and scripts/generate-sitemap.mjs all derive from this.
+  // No trailing slash.
+  url: 'https://axiomrisk.co',
   locale: 'en_IN',
   email: CONTACT_EMAIL,
   // NOTE: no phone number or street address. Nothing is published here unless

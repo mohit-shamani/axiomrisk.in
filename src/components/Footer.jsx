@@ -46,7 +46,12 @@ export default function Footer() {
           <h3 className="footer__heading">Contact</h3>
           <a className="footer__link" href={`mailto:${site.email}`}>{site.email}</a>
           <span className="footer__link footer__link--static">{site.location}</span>
-          <a className="footer__link" href={site.social.linkedin} target="_blank" rel="noreferrer">
+          <a
+            className="footer__link"
+            href={site.social.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             LinkedIn
           </a>
         </div>

@@ -10,11 +10,15 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = path.join(ROOT, 'dist')
-const SITE_URL = 'https://axiomrisk.in'
+
+// Read the origin from the app config so the sitemap can never disagree with
+// the canonical URLs the pages themselves render.
+const { site } = await import(pathToFileURL(path.join(ROOT, 'src/config/site.js')).href)
+const SITE_URL = site.url.replace(/\/$/, '')
 
 // Pages that must never appear in the sitemap.
 const EXCLUDE = new Set(['styleguide', '404'])
@@ -96,3 +100,22 @@ console.log(
     articles === 1 ? '' : 's'
   })`
 )
+
+// Keep robots.txt's Sitemap: line in step with the configured origin, so the
+// two can never disagree after a domain change.
+const robotsPath = path.join(DIST, 'robots.txt')
+if (fs.existsSync(robotsPath)) {
+  const before = fs.readFileSync(robotsPath, 'utf8')
+  const after = before.replace(
+    /^Sitemap:\s*\S+$/m,
+    `Sitemap: ${SITE_URL}/sitemap.xml`
+  )
+  if (after !== before) {
+    fs.writeFileSync(robotsPath, after, 'utf8')
+    console.log(`[sitemap] corrected robots.txt Sitemap: -> ${SITE_URL}/sitemap.xml`)
+  } else {
+    console.log('[sitemap] robots.txt Sitemap: already matches')
+  }
+} else {
+  console.warn('[sitemap] WARNING: dist/robots.txt not found')
+}

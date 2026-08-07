@@ -43,6 +43,12 @@ export const routes = [
       { path: 'terms', element: <Terms /> },
       // Internal design reference — noindex, unlinked. Remove before launch.
       { path: 'styleguide', element: <Styleguide /> },
+      // Prerenders to dist/404.html. Static hosts (Netlify, Cloudflare Pages,
+      // GitHub Pages) serve that file for unmatched paths, so an unknown URL
+      // gets the branded 404 instead of the host's default. Excluded from the
+      // sitemap by scripts/generate-sitemap.mjs.
+      { path: '404', element: <NotFound /> },
+      // Client-side catch-all for in-app navigation.
       { path: '*', element: <NotFound /> },
     ],
   },
