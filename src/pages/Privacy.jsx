@@ -1,19 +1,22 @@
 import Seo from '../components/Seo'
 import PageIntro from '../components/PageIntro'
-import Section from '../components/Section'
+import LegalDocument from '../sections/LegalDocument'
 import { seo } from '../config/seo'
+import { privacySections } from '../config/legal'
 
 export default function Privacy() {
   return (
     <>
       <Seo {...seo.privacy} />
-      <PageIntro eyebrow="Legal" title="Privacy Policy" />
-      <Section container="narrow">
-        <div className="stub">
-          <span className="stub__note">Placeholder route</span>
-          <p>The privacy policy content will be added here.</p>
-        </div>
-      </Section>
+      <PageIntro
+        eyebrow="LEGAL"
+        title="Privacy Policy"
+        lead="What we collect through this website, why, and what you can ask us to do about it."
+      />
+      <LegalDocument
+        sections={privacySections}
+        intro="We keep this short and specific. If anything here is unclear, ask us — a policy nobody can follow is not much of a safeguard."
+      />
     </>
   )
 }

@@ -143,12 +143,22 @@ required. If your host adds one, make sure it does not shadow the static files.
 
 ## Pre-launch checklist
 
-- [ ] Replace `CONTACT_EMAIL` in `src/config/site.js`
+**Blocking**
+
+- [ ] Replace `CONTACT_EMAIL` in `src/config/site.js` (still on the old `.in` domain)
 - [ ] Add `VITE_WEB3FORMS_ACCESS_KEY` locally **and** on the host, then rebuild
-- [ ] Confirm or remove the LinkedIn URL
+- [ ] Add `public/og-default.png` — 1200×630, referenced by every page's `og:image`
 - [ ] Add `public/downloads/axiomrisk-risk-register-template.xlsx`
-- [ ] Build out `/privacy` and `/terms`
-- [ ] Fill the `{{ADD SOURCE: …}}` placeholders in the insights articles
+- [ ] Fill the 7 `{{PLACEHOLDER}}` values in `src/config/legal.js` and have the
+      privacy policy and terms reviewed by a lawyer — they are drafts
+
+**Should fix**
+
+- [ ] Delete `/styleguide` (`src/pages/Styleguide.jsx`, its route, `styles/styleguide.css`)
+- [ ] Delete `public/downloads/PLACE-FILES-HERE.txt`
+- [ ] Confirm or remove the LinkedIn URL
+- [ ] Fill the 10 `{{ADD SOURCE: …}}` placeholders in the insights articles
+- [ ] Remove unused hero visuals if you have settled on one
 - [ ] Add an Open Graph image at `public/og-default.png`
 - [ ] Delete `/styleguide` (`src/pages/Styleguide.jsx`, its route, `styles/styleguide.css`)
 - [ ] Remove unused hero visuals if you have settled on one
