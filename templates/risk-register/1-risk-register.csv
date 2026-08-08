@@ -1,0 +1,21 @@
+ID,Risk Statement (cause - event - consequence),Category,Owner (named person),Existing Controls,Likelihood (1-4),Impact (1-4),Rating,Direction,Treatment / Action,Action Owner,Due Date,Last Reviewed,Status
+EX-1,"Reliance on a single supplier for a critical component could lead to an extended production stoppage, delaying customer orders and triggering contractual penalties.",Operational,"[Name]","Quarterly supplier review; 3 weeks of buffer stock held",3,4,=F2*G2,Increasing,"Qualify a second supplier for the component; hold buffer stock at agreed level until qualified.","[Name]",,,Open
+EX-2,"Only one person understands the month-end reconciliation process, so an extended absence would delay reporting and could allow errors to go undetected.",Operational,"[Name]","Process runs to a monthly checklist",3,3,=F3*G3,Stable,"Document the process to a level a second person can run; cross-train one colleague.","[Name]",,,Open
+EX-3,"Regulatory obligations are tracked informally, so a change in requirements could go unnoticed until a filing is missed or a review raises a finding.",Compliance,"[Name]","Ad-hoc monitoring by the finance lead",2,4,=F4*G4,Stable,"Build a documented obligations register with named owners and review dates.","[Name]",,,Open
+,,,,,,,=F5*G5,,,,,,
+,,,,,,,=F6*G6,,,,,,
+,,,,,,,=F7*G7,,,,,,
+,,,,,,,=F8*G8,,,,,,
+,,,,,,,=F9*G9,,,,,,
+,,,,,,,=F10*G10,,,,,,
+,,,,,,,=F11*G11,,,,,,
+,,,,,,,=F12*G12,,,,,,
+,,,,,,,=F13*G13,,,,,,
+,,,,,,,=F14*G14,,,,,,
+,,,,,,,=F15*G15,,,,,,
+,,,,,,,=F16*G16,,,,,,
+,,,,,,,=F17*G17,,,,,,
+,,,,,,,=F18*G18,,,,,,
+,,,,,,,=F19*G19,,,,,,
+,,,,,,,=F20*G20,,,,,,
+,,,,,,,=F21*G21,,,,,,

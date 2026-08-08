@@ -1,0 +1,30 @@
+LIKELIHOOD SCALE,,
+Score,Label,"Define for your business (fill this in before you start rating)"
+1,Rare,"e.g. no known occurrence, and no current conditions that would bring it about"
+2,Unlikely,"e.g. plausible but would need an unusual combination of circumstances"
+3,Possible,"e.g. has happened in this sector, or current conditions make it credible"
+4,Likely,"e.g. has happened here before, or is expected under current conditions"
+,,
+IMPACT SCALE,,
+Score,Label,"Define for your business — use measures you actually recognise (days of disruption, customers affected, share of revenue, regulatory consequence). Do not leave these generic."
+1,Minor,"<define>"
+2,Moderate,"<define>"
+3,Major,"<define>"
+4,Severe,"<define>"
+,,
+RATING BANDS (Likelihood x Impact),,
+Range,Band,Suggested response
+1-3,Low,"Accept and monitor. Review at the normal cadence."
+4-7,Moderate,"Decide explicitly: treat or accept. Record which."
+8-11,High,"Treat. Named action with a due date."
+12-16,Critical,"Treat now. Escalate to leadership and set a review date sooner than the normal cadence."
+,,
+"NOTE: these bands are a starting point, not a benchmark. They are not derived from industry data and do not compare you to anyone else. Adjust the boundaries to match how your business actually makes decisions — the point of the rating is to order your own priorities, not to produce a score with external meaning.",,
+,,
+ESCALATION THRESHOLDS,,
+"Agree these in advance, before you need them. Escalation decided in the moment is decided under pressure by someone who may be personally exposed to the outcome.",,
+Trigger,Goes to,Within
+"Any risk rated Critical (12-16)","<who>","<timeframe>"
+"Any risk moving from Moderate to High","<who>","<timeframe>"
+"Any action more than <X> days overdue","<who>","<timeframe>"
+"Any new risk arising from a change in the business","<who>","<timeframe>"

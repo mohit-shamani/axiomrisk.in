@@ -1,0 +1,23 @@
+Column,What goes here,Why it earns its place
+ID,"A short stable reference (R-01, R-02...). Never reuse an ID after a risk is closed.","Lets people refer to a risk in a meeting or email without retyping the whole statement."
+Risk Statement,"One sentence in three parts: cause, event, consequence. ""Reliance on a single supplier (cause) could lead to a production stoppage (event), delaying orders and triggering penalties (consequence).""","A topic like ""supply chain"" cannot be rated, owned or acted on. A statement can. This is the single highest-value discipline in the register."
+Category,"A short grouping: Operational, Compliance, Financial, Strategic, Continuity, People, Technology. Keep the list short.","Groups risks for reporting. Nothing more — resist the urge to build a taxonomy."
+Owner,"A named individual. Never a department, never ""TBC"".","A risk owned by a function is owned by nobody. When something falls between two teams, a departmental owner gives everyone a reason to assume it sits elsewhere."
+Existing Controls,"What already reduces this risk today — not what you plan to do.","Stops effort being duplicated, and makes the rating honest. A risk with strong controls should rate lower than the same risk with none."
+Likelihood,"1-4 against the scale on the Scales sheet.","Half of the prioritisation. Keep the scale small so people cannot cluster everything in the middle."
+Impact,"1-4 against the scale on the Scales sheet. Define impact in your own terms before you start rating.","The other half. Generic words like ""moderate"" mean different things to different people in the same room."
+Rating,"Calculated automatically (Likelihood x Impact). Do not overwrite the formula.","Drives ordering. Treat it as a sorting aid, not a measurement — a 12 is not meaningfully worse than a 10."
+Direction,"Increasing, Stable or Decreasing since the last review.","Often more useful than the rating itself. A moderate risk trending upward usually deserves attention before a high one that is stable."
+Treatment / Action,"What is being done — or an explicit decision to accept the risk as it stands.","Accepting a risk is legitimate. Accepting one without recording that you did is the problem."
+Action Owner,"The named person doing the action. Frequently not the risk owner.","Separating the two makes it clear who is accountable for the exposure versus who is doing the work."
+Due Date,"A real date. If there is no date, it is an intention rather than an action.","Actions without dates accumulate silently and make the register look busy while nothing progresses."
+Last Reviewed,"The date this row was last genuinely looked at.","Makes staleness visible at a glance. Sort by this column before a review meeting."
+Status,"Open, In Progress, Accepted, or Closed.","Lets you filter the live register without deleting history."
+,,
+HOW TO RUN IT,,
+Keep it short,"Fifteen risks leadership actually knows beats eighty nobody has read. Risks that are not material can live in a functional list rather than the enterprise register.",
+Fix the cadence,"Quarterly suits most businesses, with an interim review triggered by significant change — a new market, a major system, an acquisition, a serious incident.",
+Review changes not everything,"A useful meeting covers what has moved, what is overdue and what is new. Reading every row aloud guarantees the meeting becomes an obligation.",
+Watch for these,"Ratings that never change; one name against most of the register; actions with no date; the register being maintained by one person alone.",
+,,
+"This template is a starting point, not a standard. Adjust the columns and scales to fit your business — a structure the team will maintain is worth more than a complete one they abandon.",,
