@@ -132,48 +132,99 @@
   transition: transform var(--dur-med) var(--ease-out),
     opacity var(--dur-fast) var(--ease-out);
 }
-.header__burger.is-open span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.header__burger.is-open span:nth-child(2) {
-  opacity: 0;
-}
-.header__burger.is-open span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
+/* No open-state morph here: the burger only opens the menu, and the panel
+   carries its own close button. */
 
 /* --- Mobile menu ------------------------------------------------------ */
-.mobile-menu {
+/* The overlay is a sibling of .header, never a child: .header uses
+   backdrop-filter, which makes it a containing block for fixed-position
+   descendants, so a nested fixed overlay would be sized against the 76px
+   header instead of the viewport and clipped to nothing. */
+.mobile-menu-root {
   position: fixed;
-  inset: var(--header-h) 0 0 0;
-  z-index: var(--z-overlay);
+  inset: 0;
+  z-index: var(--z-modal); /* above the header */
+  /* Clips the panel while it slides in/out. Fixed elements don't contribute
+     to document scroll overflow, but this makes it structurally impossible
+     for the off-screen panel to bleed past the viewport edge. */
+  overflow: hidden;
+}
+.mobile-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 32, 46, 0.55);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Slide-in panel — opaque, so no page content shows through */
+.mobile-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(86vw, 360px);
+  display: flex;
+  flex-direction: column;
   background: var(--color-bg);
-  padding: var(--space-6) var(--gutter) var(--space-8);
-  transform: translateX(100%);
-  transition: transform var(--dur-med) var(--ease-in-out);
+  border-left: 1px solid var(--color-border);
+  box-shadow: -12px 0 40px rgba(20, 32, 46, 0.18);
+  padding: var(--space-4) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom));
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
-.mobile-menu.is-open {
-  transform: translateX(0);
+
+.mobile-menu__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 52px;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
 }
+.mobile-menu__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  margin-right: -0.5rem; /* optical alignment with the panel edge */
+  border-radius: var(--radius-md);
+  color: var(--color-heading);
+  transition: background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.mobile-menu__close:hover {
+  background: var(--color-bg-alt);
+  color: var(--color-primary);
+}
+
 .mobile-menu__nav {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  padding-top: var(--space-2);
 }
 .mobile-menu__link {
+  display: flex;
+  align-items: center;
+  min-height: 56px; /* comfortable tap target */
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-tight);
   color: var(--color-heading);
-  padding: var(--space-4) 0;
   border-bottom: 1px solid var(--color-border);
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-menu__link:hover,
+.mobile-menu__link:active {
+  color: var(--color-primary);
 }
 .mobile-menu__link.is-active {
   color: var(--color-accent);
 }
 .mobile-menu__cta {
-  margin-top: var(--space-5);
+  margin-top: auto;
   width: 100%;
 }
 
