@@ -162,7 +162,7 @@ required. If your host adds one, make sure it does not shadow the static files.
 
 **Should fix**
 
-- [ ] Fill the 10 `{{ADD SOURCE: …}}` placeholders in the insights articles
+- [ ] Fill the 13 `{{ADD SOURCE: …}}` placeholders across the six insights articles
 - [ ] Remove unused hero visuals if you have settled on one
 - [ ] Check the site on real devices at 375 / 414 / 768 / 1440px
 - [ ] Submit a real enquiry end to end once the Web3Forms key is live
