@@ -3,16 +3,17 @@
 // Edit business facts here once; components read from this file.
 // ---------------------------------------------------------------------------
 
-// ===========================================================================
-// ⚠️  FILL IN BEFORE LAUNCH — PLACEHOLDER
 // The public contact address. Used by the contact page, the form's error
-// fallback and the footer. Replace with the real inbox.
-// ===========================================================================
-export const CONTACT_EMAIL = 'contact@axiomrisk.in'
+// fallback and the footer. Confirm this mailbox exists and is monitored.
+export const CONTACT_EMAIL = 'contact@axiomrisk.co'
 
 export const site = {
   name: 'AxiomRisk',
-  legalName: 'AxiomRisk Advisory Pvt. Ltd.',
+  // Trading name only. There is no registered company entity, so nothing
+  // here should imply one — no "Pvt. Ltd.", no CIN, no registration number.
+  // If an entity is incorporated later, set the registered name here and fill
+  // {{COMPANY_LEGAL_NAME}} in src/config/legal.js to match.
+  legalName: 'AxiomRisk',
   tagline: 'Clarity in Complexity',
   description:
     'AxiomRisk is a B2B risk advisory and management consulting firm helping ' +
@@ -29,10 +30,10 @@ export const site = {
   // To add one later, set it here and render it in Footer / ContactDetails.
   location: 'India',
   responseTime: 'We typically respond within one business day.',
-  social: {
-    // ⚠️ PLACEHOLDER — confirm or remove before launch.
-    linkedin: 'https://www.linkedin.com/company/axiomrisk',
-  },
+  // No social profiles published yet. The LinkedIn company page did not
+  // exist, so the link was removed rather than shipped broken. To add one:
+  // set `linkedin` here and restore the link in Footer.jsx.
+  social: {},
 }
 
 // Active hero visual. Options (see src/sections/visuals/index.js):

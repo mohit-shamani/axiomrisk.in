@@ -40,12 +40,18 @@ npm run dev              # http://localhost:5173
 
 | Constant | Status |
 |---|---|
-| `CONTACT_EMAIL` | ⚠️ **placeholder** — replace with the real inbox |
-| `site.social.linkedin` | ⚠️ confirm the URL or remove |
+| `CONTACT_EMAIL` | `contact@axiomrisk.co` — confirm this mailbox exists and is monitored |
+| `site.legalName` | `AxiomRisk` — trading name only, no registered entity |
+| `site.social` | empty — no social profiles published yet |
 
-No phone number or street address is published anywhere. This is deliberate: a
-placeholder that reaches nobody is worse than an omission. To add one, set it in
-`src/config/site.js` and render it in `Footer.jsx` / `ContactDetails.jsx`.
+No phone number, street address or social link is published anywhere. This is
+deliberate: a placeholder that reaches nobody is worse than an omission. To add
+one, set it in `src/config/site.js` and render it in `Footer.jsx` /
+`ContactDetails.jsx`.
+
+Nothing on the site implies a registered company — no "Pvt. Ltd.", CIN or
+registration number. If an entity is incorporated later, set `site.legalName`
+and fill `{{COMPANY_LEGAL_NAME}}` in `src/config/legal.js` to match.
 
 ---
 
@@ -84,8 +90,9 @@ type scale, components and all four hero visual options.
 | `/insights/:slug` | ✅ prerendered per article (markdown) |
 | `/resources` | ✅ built |
 | `/risk-health-check` | ✅ built (interactive self-assessment) |
-| `/privacy` | placeholder |
-| `/terms` | placeholder |
+| `/privacy` | ⚠️ drafted — fill placeholders + legal review |
+| `/terms` | ⚠️ drafted — fill placeholders + legal review |
+| `/404` | ✅ prerendered to `dist/404.html` |
 | `/styleguide` | internal — delete before launch |
 
 ### Adding an insights article
@@ -145,20 +152,20 @@ required. If your host adds one, make sure it does not shadow the static files.
 
 **Blocking**
 
-- [ ] Replace `CONTACT_EMAIL` in `src/config/site.js` (still on the old `.in` domain)
-- [ ] Add `VITE_WEB3FORMS_ACCESS_KEY` locally **and** on the host, then rebuild
+- [ ] Add `VITE_WEB3FORMS_ACCESS_KEY` on the host (and locally), then rebuild —
+      without it every form shows its error fallback
 - [ ] Add `public/og-default.png` — 1200×630, referenced by every page's `og:image`
-- [ ] Add `public/downloads/axiomrisk-risk-register-template.xlsx`
+- [ ] Add `public/downloads/axiomrisk-risk-register-template.xlsx`, or the
+      `/resources` download 404s after the email is captured
 - [ ] Fill the 7 `{{PLACEHOLDER}}` values in `src/config/legal.js` and have the
       privacy policy and terms reviewed by a lawyer — they are drafts
+- [ ] Confirm `contact@axiomrisk.co` exists and is monitored
 
 **Should fix**
 
 - [ ] Delete `/styleguide` (`src/pages/Styleguide.jsx`, its route, `styles/styleguide.css`)
 - [ ] Delete `public/downloads/PLACE-FILES-HERE.txt`
-- [ ] Confirm or remove the LinkedIn URL
 - [ ] Fill the 10 `{{ADD SOURCE: …}}` placeholders in the insights articles
 - [ ] Remove unused hero visuals if you have settled on one
-- [ ] Add an Open Graph image at `public/og-default.png`
-- [ ] Delete `/styleguide` (`src/pages/Styleguide.jsx`, its route, `styles/styleguide.css`)
-- [ ] Remove unused hero visuals if you have settled on one
+- [ ] Check the site on real devices at 375 / 414 / 768 / 1440px
+- [ ] Submit a real enquiry end to end once the Web3Forms key is live

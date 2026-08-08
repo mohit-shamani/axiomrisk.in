@@ -21,7 +21,7 @@ const MUST_PASS = [
   'user-name@example.technology',
   "o'brien@example.com",
   'UPPER.CASE@Example.COM',
-  'finance+invoices@axiomrisk.in',
+  'finance+invoices@axiomrisk.co',
   'r&d@example.com',
   '123@example.com',
   'x@example.museum',

@@ -119,3 +119,12 @@ if (fs.existsSync(robotsPath)) {
 } else {
   console.warn('[sitemap] WARNING: dist/robots.txt not found')
 }
+
+// dist/.vite/ssr-manifest.json is a build-time artefact that embeds absolute
+// paths from the build machine. Nothing serves it, so drop it rather than
+// publishing local filesystem details.
+const viteMeta = path.join(DIST, '.vite')
+if (fs.existsSync(viteMeta)) {
+  fs.rmSync(viteMeta, { recursive: true, force: true })
+  console.log('[sitemap] removed dist/.vite build artefacts')
+}
