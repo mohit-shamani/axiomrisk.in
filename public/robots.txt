@@ -3,7 +3,6 @@
 
 User-agent: *
 Allow: /
-Disallow: /styleguide
 
 # ---------------------------------------------------------------------------
 # AI / answer-engine crawlers.

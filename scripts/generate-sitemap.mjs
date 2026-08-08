@@ -21,7 +21,7 @@ const { site } = await import(pathToFileURL(path.join(ROOT, 'src/config/site.js'
 const SITE_URL = site.url.replace(/\/$/, '')
 
 // Pages that must never appear in the sitemap.
-const EXCLUDE = new Set(['styleguide', '404'])
+const EXCLUDE = new Set(['404'])
 
 // Crawl priority / change frequency by route shape.
 function hints(route) {

@@ -72,8 +72,8 @@ src/
 **Design tokens** live in `src/styles/tokens.css`. Colour, type, spacing, motion
 and elevation all resolve from there — change a token, and it propagates.
 
-**Live design reference:** `/styleguide` (noindex, unlinked). Shows the palette,
-type scale, components and all four hero visual options.
+There is no styleguide route — it was an internal reference page and was
+removed before launch.
 
 ---
 
@@ -93,7 +93,6 @@ type scale, components and all four hero visual options.
 | `/privacy` | ⚠️ drafted — fill placeholders + legal review |
 | `/terms` | ⚠️ drafted — fill placeholders + legal review |
 | `/404` | ✅ prerendered to `dist/404.html` |
-| `/styleguide` | internal — delete before launch |
 
 ### Adding an insights article
 
@@ -163,8 +162,6 @@ required. If your host adds one, make sure it does not shadow the static files.
 
 **Should fix**
 
-- [ ] Delete `/styleguide` (`src/pages/Styleguide.jsx`, its route, `styles/styleguide.css`)
-- [ ] Delete `public/downloads/PLACE-FILES-HERE.txt`
 - [ ] Fill the 10 `{{ADD SOURCE: …}}` placeholders in the insights articles
 - [ ] Remove unused hero visuals if you have settled on one
 - [ ] Check the site on real devices at 375 / 414 / 768 / 1440px

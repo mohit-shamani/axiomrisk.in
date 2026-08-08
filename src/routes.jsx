@@ -12,7 +12,6 @@ import RiskHealthCheck from './pages/RiskHealthCheck'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import NotFound from './pages/NotFound'
-import Styleguide from './pages/Styleguide'
 
 /**
  * Route table consumed by vite-react-ssg (react-router data format).
@@ -41,8 +40,6 @@ export const routes = [
       { path: 'risk-health-check', element: <RiskHealthCheck /> },
       { path: 'privacy', element: <Privacy /> },
       { path: 'terms', element: <Terms /> },
-      // Internal design reference — noindex, unlinked. Remove before launch.
-      { path: 'styleguide', element: <Styleguide /> },
       // Prerenders to dist/404.html. Static hosts (Netlify, Cloudflare Pages,
       // GitHub Pages) serve that file for unmatched paths, so an unknown URL
       // gets the branded 404 instead of the host's default. Excluded from the

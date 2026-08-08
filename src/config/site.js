@@ -41,7 +41,8 @@ export const site = {
 //   'resolving-grid'  — data field resolving into an ordered trend
 //   'axis-shield'     — emblematic shield in precise line-work
 //   'network-lattice' — interconnected exposures, critical path lit
-// Compare them all live at /styleguide.
+// Unused visuals are kept in the registry so an alternative can be swapped in
+// without rebuilding it; they add nothing to the bundle unless selected.
 export const heroVisual = 'chaos-to-order'
 
 // Primary navigation (Header + Footer).
