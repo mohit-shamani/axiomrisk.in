@@ -21,8 +21,12 @@ export const site = {
     'clarity and precision.',
   // Production origin. Single source of truth — canonicals, Open Graph,
   // JSON-LD and scripts/generate-sitemap.mjs all derive from this.
-  // No trailing slash.
-  url: 'https://axiomrisk.co',
+  //
+  // MUST include the www subdomain: the apex 308-redirects to www, so a
+  // non-www canonical points at a URL that never serves a 200. Verify with
+  //   curl -sI https://axiomrisk.co/ | grep -i location
+  // before changing this. No trailing slash.
+  url: 'https://www.axiomrisk.co',
   locale: 'en_IN',
   email: CONTACT_EMAIL,
   // NOTE: no phone number or street address. Nothing is published here unless

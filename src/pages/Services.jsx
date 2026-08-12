@@ -1,4 +1,5 @@
 import Seo from '../components/Seo'
+import JsonLd, { serviceCatalogSchema } from '../components/JsonLd'
 import PageIntro from '../components/PageIntro'
 import ServiceDetailBlocks from '../sections/ServiceDetailBlocks'
 import EngagementModels from '../sections/EngagementModels'
@@ -6,11 +7,14 @@ import RelatedReading from '../sections/RelatedReading'
 import RiskCheckPromo from '../sections/RiskCheckPromo'
 import FinalCta from '../sections/FinalCta'
 import { seo } from '../config/seo'
+import { site } from '../config/site'
+import { serviceDetails } from '../config/content'
 
 export default function Services() {
   return (
     <>
       <Seo {...seo.services} />
+      <JsonLd data={serviceCatalogSchema(site, serviceDetails)} />
 
       <PageIntro
         eyebrow="OUR SERVICES"
