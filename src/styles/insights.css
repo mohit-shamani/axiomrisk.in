@@ -221,6 +221,142 @@
   border-radius: var(--radius-lg);
 }
 
+/* --- Article body + on-this-page rail --------------------------------- */
+.article__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 1rem + 3vw, 4rem);
+  max-width: var(--container-narrow);
+  margin-inline: auto;
+}
+.article__main {
+  min-width: 0; /* lets long code/tables shrink instead of forcing overflow */
+}
+.article__aside {
+  min-width: 0;
+}
+
+/* Two columns only when there is genuinely room for both */
+@media (min-width: 1080px) {
+  .article__body {
+    grid-template-columns: minmax(0, 1fr) 250px;
+    max-width: var(--container-max);
+  }
+  /* The rail sits second in the DOM (article first for screen readers and
+     for the single-column order), but reads as a sidebar on wide screens. */
+  .article__aside {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+/* --- Table of contents ------------------------------------------------ */
+.toc__title {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0;
+}
+.toc__list {
+  margin-top: var(--space-5);
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.toc__item {
+  border-left: 2px solid var(--color-border);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.toc__link {
+  display: block;
+  padding: 0.5rem 0 0.5rem var(--space-4);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--color-text);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.toc__link:hover {
+  color: var(--color-primary);
+}
+/* Sub-headings sit further in, with a lighter rule of their own */
+.toc__item--h3 {
+  margin-left: var(--space-4);
+}
+.toc__item--h3 .toc__link {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+.toc__item--h3 .toc__link:hover {
+  color: var(--color-primary);
+}
+/* Current section */
+.toc__item.is-active {
+  border-left-color: var(--color-accent);
+}
+.toc__item.is-active > .toc__link {
+  color: var(--color-heading);
+  font-weight: var(--fw-semibold);
+}
+.toc__item--h3.is-active > .toc__link {
+  color: var(--color-heading);
+}
+
+/* Sticky rail — wide screens only */
+.toc--rail {
+  display: none;
+}
+@media (min-width: 1080px) {
+  .toc--rail {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-6));
+    max-height: calc(100dvh - var(--header-h) - var(--space-8));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: var(--space-2);
+  }
+  .toc--collapsible {
+    display: none;
+  }
+}
+
+/* Collapsible — narrow screens */
+.toc--collapsible {
+  margin-bottom: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.toc__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  cursor: pointer;
+  list-style: none;
+  color: var(--color-accent);
+}
+.toc__summary::-webkit-details-marker {
+  display: none;
+}
+.toc__summary::marker {
+  content: '';
+}
+.toc__summary svg {
+  transition: transform var(--dur-med) var(--ease-out);
+}
+.toc--collapsible[open] .toc__summary svg {
+  transform: rotate(180deg);
+}
+.toc--collapsible .toc__list {
+  margin-top: var(--space-4);
+}
+
 /* --- Prose (rendered markdown) ---------------------------------------- */
 .prose {
   font-size: 1.09rem;

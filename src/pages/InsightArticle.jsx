@@ -7,6 +7,7 @@ import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import ArticleCover from '../components/ArticleCover'
 import ArticleCard from '../components/ArticleCard'
+import TableOfContents from '../components/TableOfContents'
 import NotFound from './NotFound'
 import { site } from '../config/site'
 import { getPostBySlug, getRelatedPosts, formatDate } from '../lib/posts'
@@ -112,13 +113,20 @@ export default function InsightArticle() {
           </div>
         </Container>
 
-        {/* Body */}
-        <Container size="narrow">
-          <div
-            className="prose"
-            /* Content is authored in-repo as markdown — not user input. */
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />
+        {/* Body + on-this-page navigation */}
+        <Container size="wide">
+          <div className="article__body">
+            <div className="article__main">
+              <div
+                className="prose"
+                /* Content is authored in-repo as markdown — not user input. */
+                dangerouslySetInnerHTML={{ __html: post.html }}
+              />
+            </div>
+            <aside className="article__aside">
+              <TableOfContents headings={post.headings} />
+            </aside>
+          </div>
         </Container>
 
         {/* End-of-article CTA */}

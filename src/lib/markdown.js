@@ -41,14 +41,38 @@ export function parseFrontmatter(raw) {
   return { data, content: raw.slice(match[0].length) }
 }
 
-/** Stable, URL-safe id from heading text — used for anchor links. */
-export function slugifyHeading(text) {
+/**
+ * Decode the HTML entities marked emits when it renders inline text.
+ *
+ * Without this, a heading like: ## "Who owns this risk?"
+ * slugifies from `&quot;Who owns...&quot;` and the entity's own letters leak
+ * into the id ("quotwho-owns..."), while the table of contents — which reads
+ * the raw markdown — produces "who-owns...". The two then disagree and every
+ * anchor link silently misses.
+ */
+function decodeEntities(text) {
   return String(text)
+    .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+}
+
+/**
+ * Stable, URL-safe id from heading text — used for anchor links.
+ * Both the renderer and extractHeadings() route through this, so the ids in
+ * the HTML and the ids in the table of contents are guaranteed to match.
+ */
+export function slugifyHeading(text) {
+  return decodeEntities(String(text).replace(/<[^>]*>/g, ''))
     .toLowerCase()
-    .replace(/<[^>]*>/g, '')
     .replace(/[^\w\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
 }
 
 const marked = new Marked({ gfm: true, breaks: false })
@@ -59,7 +83,7 @@ marked.use({
     // anchor an extracted answer to a specific section.
     heading({ tokens, depth }) {
       const text = this.parser.parseInline(tokens)
-      const id = slugifyHeading(this.parser.parseInline(tokens).replace(/<[^>]*>/g, ''))
+      const id = slugifyHeading(text)
       return `<h${depth} id="${id}">${text}</h${depth}>\n`
     },
 
