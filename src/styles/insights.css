@@ -236,17 +236,14 @@
   min-width: 0;
 }
 
-/* Two columns only when there is genuinely room for both */
+/* Two columns only when there is genuinely room for both. The rail is first
+   in the DOM, so it lands in the left column with no grid reordering — and
+   below this width it stacks above the article, which is where the collapsed
+   version belongs. */
 @media (min-width: 1080px) {
   .article__body {
-    grid-template-columns: minmax(0, 1fr) 250px;
+    grid-template-columns: 250px minmax(0, 1fr);
     max-width: var(--container-max);
-  }
-  /* The rail sits second in the DOM (article first for screen readers and
-     for the single-column order), but reads as a sidebar on wide screens. */
-  .article__aside {
-    grid-column: 2;
-    grid-row: 1;
   }
 }
 

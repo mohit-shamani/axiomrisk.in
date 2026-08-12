@@ -116,6 +116,12 @@ export default function InsightArticle() {
         {/* Body + on-this-page navigation */}
         <Container size="wide">
           <div className="article__body">
+            {/* First in the DOM so the collapsed version sits above the
+                article on narrow screens, and so the left rail needs no
+                grid reordering on wide ones. */}
+            <aside className="article__aside">
+              <TableOfContents headings={post.headings} />
+            </aside>
             <div className="article__main">
               <div
                 className="prose"
@@ -123,9 +129,6 @@ export default function InsightArticle() {
                 dangerouslySetInnerHTML={{ __html: post.html }}
               />
             </div>
-            <aside className="article__aside">
-              <TableOfContents headings={post.headings} />
-            </aside>
           </div>
         </Container>
 
