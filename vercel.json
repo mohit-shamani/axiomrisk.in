@@ -1,5 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/static-loader-data-manifest-:hash.json",
+      "destination": "/empty-loader-data.json"
+    },
+    {
+      "source": "/static-loader-data/:path*",
+      "destination": "/empty-loader-data.json"
+    }
+  ]
 }
