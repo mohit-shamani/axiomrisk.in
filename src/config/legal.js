@@ -10,29 +10,33 @@
 // reviewed against the Digital Personal Data Protection Act 2023 or its
 // rules as they apply to your entity.
 //
-// Every {{PLACEHOLDER}} below is a fact only you can supply. Search this file
-// for "{{" before publishing — the pages render them visibly on purpose, so
-// an unfilled value cannot ship unnoticed.
+// All placeholders are now filled. The company name, location and contact
+// address derive from src/config/site.js so they cannot drift; the remaining
+// values were confirmed by the business:
+//
+//   retention        24 months for enquiry correspondence
+//   governing law    India, with no exclusive-jurisdiction clause, because
+//                    there is no registered entity to anchor a seat to
+//   privacy contact  a role rather than a named individual
+//
+// Anything still wrapped in {{ }} renders highlighted on the page, so a gap
+// cannot ship unnoticed. There are none at present.
 // ---------------------------------------------------------------------------
 
-export const LEGAL_LAST_UPDATED = '{{LAST_UPDATED_DATE}}'
+import { site, CONTACT_EMAIL } from './site'
 
-export const LEGAL_PLACEHOLDERS = [
-  '{{LAST_UPDATED_DATE}}',
-  '{{COMPANY_LEGAL_NAME}}',
-  '{{REGISTERED_ADDRESS}}',
-  '{{GRIEVANCE_OFFICER_NAME}}',
-  '{{GRIEVANCE_OFFICER_EMAIL}}',
-  '{{RETENTION_PERIOD}}',
-  '{{GOVERNING_JURISDICTION}}',
-]
+// Update whenever the wording below changes materially.
+export const LEGAL_LAST_UPDATED = '12 August 2026'
 
 export const privacySections = [
   {
     id: 'who-we-are',
     heading: 'Who we are',
     body: [
-      'This site is operated by {{COMPANY_LEGAL_NAME}} ("AxiomRisk", "we", "us"), a risk advisory and management consulting firm. Our registered address is {{REGISTERED_ADDRESS}}.',
+      // No registered entity exists and no address is published anywhere on
+      // the site, so neither is claimed here. If an entity is incorporated,
+      // set site.legalName and add the registered address to this sentence.
+      `This site is operated by ${site.legalName} ("we", "us"), a risk advisory and management consulting firm working with businesses across ${site.location}.`,
       'This policy explains what personal information we collect through this website, why we collect it, and what you can do about it. It covers this website only. It does not cover information you share with us during a client engagement, which is governed by the engagement letter and any confidentiality agreement between us.',
     ],
   },
@@ -77,7 +81,7 @@ export const privacySections = [
     id: 'retention',
     heading: 'How long we keep it',
     body: [
-      'We keep enquiry correspondence for {{RETENTION_PERIOD}}, after which it is deleted unless it forms part of an ongoing or completed client engagement, or we are required to retain it for legal or regulatory reasons.',
+      'We keep enquiry correspondence for 24 months, after which it is deleted unless it forms part of an ongoing or completed client engagement, or we are required to retain it for legal or regulatory reasons.',
       'You can ask us to delete your enquiry sooner. See "Your choices" below.',
     ],
   },
@@ -102,7 +106,11 @@ export const privacySections = [
     id: 'contact',
     heading: 'Contact and grievances',
     body: [
-      'For any question about this policy or about how we handle your information, contact {{GRIEVANCE_OFFICER_NAME}} at {{GRIEVANCE_OFFICER_EMAIL}}.',
+      // A role rather than an individual, so the policy does not go stale if
+      // the person changes. India's DPDP Act expects a reachable contact for
+      // questions about personal data; if a named officer is appointed later,
+      // put the name here alongside the address.
+      `For any question about this policy or about how we handle your information, contact our Privacy Contact at ${CONTACT_EMAIL}.`,
       'If you are not satisfied with our response, you may escalate the matter to the relevant supervisory authority.',
     ],
   },
@@ -120,7 +128,7 @@ export const termsSections = [
     id: 'about-these-terms',
     heading: 'About these terms',
     body: [
-      'These terms govern your use of this website, operated by {{COMPANY_LEGAL_NAME}} ("AxiomRisk", "we", "us"). By using the site you accept them. If you do not accept them, please do not use the site.',
+      `These terms govern your use of this website, operated by ${site.legalName} ("we", "us"). By using the site you accept them. If you do not accept them, please do not use the site.`,
       'These terms cover the website only. Any advisory work we carry out for you is governed by a separate engagement letter, which takes precedence over anything on this site.',
     ],
   },
@@ -182,14 +190,17 @@ export const termsSections = [
     id: 'governing-law',
     heading: 'Governing law',
     body: [
-      'These terms are governed by the laws of {{GOVERNING_JURISDICTION}}, and any dispute relating to them is subject to the exclusive jurisdiction of its courts.',
+      // Governing law only. No exclusive-jurisdiction clause naming a seat,
+      // since there is no registered entity to anchor one to. If an entity is
+      // incorporated, add the courts of its registered office here.
+      'These terms are governed by and construed in accordance with the laws of India.',
     ],
   },
   {
     id: 'contact-terms',
     heading: 'Contact',
     body: [
-      'If you have a question about these terms, contact us at {{GRIEVANCE_OFFICER_EMAIL}}.',
+      `If you have a question about these terms, contact us at ${CONTACT_EMAIL}.`,
     ],
   },
 ]
