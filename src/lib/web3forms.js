@@ -32,48 +32,73 @@ export function isFormConfigured() {
  *   { ok: false, kind: 'api', status, message } — API rejected the submission
  */
 export async function submitToWeb3Forms(fields) {
+  // Logged in production too. A form that fails silently in the browser is
+  // undiagnosable for whoever has to support it, and the API's own message
+  // ("Invalid access key", rate limiting, and so on) is the fastest route to
+  // the cause. Nothing secret is written here: the key is already public in
+  // the bundle, and only field NAMES are listed, never what the user typed.
+  const log = (...args) => console.error('[AxiomRisk form]', ...args)
+
   if (!isFormConfigured()) {
-    if (import.meta.env.DEV) {
-      console.error(
-        '[AxiomRisk] Form not submitted: VITE_WEB3FORMS_ACCESS_KEY is missing or ' +
-          'still set to the placeholder value.\n' +
-          '  1. cp .env.example .env\n' +
-          '  2. add your key from https://web3forms.com\n' +
-          '  3. restart the dev server (or rebuild) — Vite inlines env vars at build time'
-      )
-    }
+    log(
+      'not submitted — VITE_WEB3FORMS_ACCESS_KEY is missing or still the placeholder.\n' +
+        '  Local:  cp .env.example .env, add the key, restart the dev server\n' +
+        '  Vercel: add it to the project env vars, then REDEPLOY — Vite inlines\n' +
+        '          env vars at build time, so setting it alone changes nothing.'
+    )
     return { ok: false, kind: 'config' }
   }
+
+  const payload = { access_key: RAW_KEY.trim(), ...fields }
 
   let res
   try {
     res = await fetch(WEB3FORMS_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ access_key: RAW_KEY.trim(), ...fields }),
+      body: JSON.stringify(payload),
     })
   } catch (err) {
-    if (import.meta.env.DEV) {
-      console.error('[AxiomRisk] Web3Forms request failed to send:', err)
-    }
+    log('request never reached the API.', {
+      subject: fields.subject,
+      error: err?.message,
+      hint: 'Offline, DNS failure, or a blocked request (ad blocker / corporate proxy).',
+    })
     return { ok: false, kind: 'network', message: err?.message }
   }
 
-  let data = {}
-  try {
-    data = await res.json()
-  } catch {
-    // Non-JSON response — treat as an API failure and fall through.
+  // Read as text first, then decide. Calling .json() on an HTML error page is
+  // what produces "Unexpected token '<'", which hides the real status.
+  const contentType = res.headers.get('content-type') || ''
+  const raw = await res.text()
+
+  let data = null
+  if (contentType.includes('application/json')) {
+    try {
+      data = JSON.parse(raw)
+    } catch (err) {
+      log(`HTTP ${res.status} claimed JSON but did not parse.`, {
+        parseError: err?.message,
+        bodyStart: raw.slice(0, 200),
+      })
+      return { ok: false, kind: 'api', status: res.status, message: 'Malformed response' }
+    }
+  } else {
+    log(`HTTP ${res.status} returned ${contentType || 'no content-type'}, not JSON.`, {
+      subject: fields.subject,
+      bodyStart: raw.slice(0, 200),
+      hint: 'An HTML body here usually means the request was intercepted before the API.',
+    })
+    return { ok: false, kind: 'api', status: res.status, message: 'Unexpected response type' }
   }
 
   if (res.ok && data.success) return { ok: true }
 
-  if (import.meta.env.DEV) {
-    console.error(
-      `[AxiomRisk] Web3Forms rejected the submission (HTTP ${res.status}):`,
-      data?.message || data
-    )
-  }
+  log(`the API rejected the submission (HTTP ${res.status}).`, {
+    apiMessage: data?.message ?? '(none given)',
+    subject: fields.subject,
+    fieldsSent: Object.keys(fields),
+  })
   return { ok: false, kind: 'api', status: res.status, message: data?.message }
 }
 
