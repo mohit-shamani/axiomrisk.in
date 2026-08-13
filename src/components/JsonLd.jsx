@@ -63,6 +63,39 @@ export function serviceCatalogSchema(site, services) {
   }
 }
 
+/**
+ * CollectionPage for the /insights index, with the articles as an ItemList.
+ *
+ * Built from the same `posts` array that renders the cards, so the markup
+ * cannot list something the page does not show. It always describes the full
+ * collection, not whatever the category filter is currently set to — the
+ * filter is client-side and the canonical URL covers every article.
+ */
+export function collectionPageSchema(site, meta, posts) {
+  const url = new URL(meta.path, site.url).href
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${url}#collection`,
+    url,
+    name: 'Insights',
+    description: meta.description,
+    inLanguage: 'en-IN',
+    publisher: { '@id': `${site.url}/#organization` },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: posts.length,
+      itemListOrder: 'https://schema.org/ItemListOrderDescending', // newest first
+      itemListElement: posts.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: new URL(p.path, site.url).href,
+        name: p.title,
+      })),
+    },
+  }
+}
+
 /** Build a schema.org FAQPage object from [{ q, a }]. */
 export function faqPageSchema(faqs) {
   return {

@@ -4,7 +4,9 @@ import PageIntro from '../components/PageIntro'
 import Section from '../components/Section'
 import Reveal from '../components/Reveal'
 import ArticleCard from '../components/ArticleCard'
+import JsonLd, { collectionPageSchema } from '../components/JsonLd'
 import { seo } from '../config/seo'
+import { site } from '../config/site'
 import { posts, getActiveCategories } from '../lib/posts'
 
 const ALL = 'All'
@@ -18,6 +20,7 @@ export default function Insights() {
   return (
     <>
       <Seo {...seo.insights} />
+      <JsonLd data={collectionPageSchema(site, seo.insights, posts)} />
 
       <PageIntro
         eyebrow="INSIGHTS"
