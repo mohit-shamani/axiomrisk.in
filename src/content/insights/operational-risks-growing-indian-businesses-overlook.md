@@ -94,6 +94,7 @@ if that provider fails. The dependency is real and continuing; the oversight is 
 
 Two specific blind spots are worth naming:
 
+
 - **Fourth-party risk.** Your provider's own critical dependencies are effectively
   yours. A logistics partner reliant on a single subcontractor passes that exposure
   through to you.
