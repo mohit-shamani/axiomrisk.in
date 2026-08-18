@@ -46,6 +46,12 @@ export const seo = {
       'businesses in India — enterprise risk, operational risk, continuity and strategy.',
     path: '/insights',
   },
+  // Dedicated service pages. Title/description live in
+  // src/config/serviceLanding.js so page copy and meta stay together;
+  // these entries exist only so the paths are documented in one place.
+  serviceBusinessContinuity: { path: '/services/business-continuity-crisis-planning' },
+  serviceEnterpriseRisk: { path: '/services/enterprise-risk-management' },
+  serviceOperationalRisk: { path: '/services/operational-risk-advisory' },
   resources: {
     title: 'Free Risk Management Resources | AxiomRisk',
     description:

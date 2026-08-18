@@ -293,6 +293,33 @@
   line-height: 1.55;
 }
 
+/* Link from a hub block through to that service's dedicated page. */
+.svc-block__deep {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-primary);
+  border-bottom: 1px solid rgba(31, 122, 92, 0.35);
+  padding-bottom: 2px;
+  transition: color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+.svc-block__deep:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+.svc-block__deep svg {
+  flex: none;
+  color: var(--color-accent);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.svc-block__deep:hover svg {
+  transform: translateX(3px);
+}
+
 /* "What this includes" panel */
 .svc-block__panel {
   background: var(--color-surface);

@@ -1,0 +1,288 @@
+/* ==========================================================================
+   AxiomRisk — dedicated service landing pages (/services/<slug>)
+   Reuses existing tokens, .section, .steps, .faq and .final-cta patterns.
+   ========================================================================== */
+
+/* --- Intro band -------------------------------------------------------- */
+.svc-page__head {
+  padding-top: clamp(2.5rem, 2rem + 3vw, 4rem);
+  padding-bottom: clamp(2.5rem, 2rem + 3vw, 4rem);
+  background:
+    radial-gradient(100% 120% at 100% 0%, rgba(31, 122, 92, 0.06), transparent 55%),
+    var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+.svc-page__title {
+  font-size: var(--fs-h1);
+  margin-top: var(--space-4);
+  max-width: 20ch;
+}
+.svc-page__intro {
+  margin-top: var(--space-5);
+  max-width: 68ch;
+}
+.svc-page__intro .lead + .lead {
+  margin-top: var(--space-4);
+}
+.svc-page__head-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+/* --- Prose block ------------------------------------------------------- */
+.svc-prose {
+  max-width: 70ch;
+}
+.svc-prose h2 {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--space-5);
+  max-width: 24ch;
+}
+.svc-prose p + p {
+  margin-top: var(--space-4);
+}
+.svc-prose p {
+  font-size: 1.06rem;
+  line-height: 1.75;
+}
+
+.svc-inline-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: var(--fw-medium);
+}
+.svc-inline-link:hover {
+  color: var(--color-accent);
+}
+
+/* --- Bulleted lists ---------------------------------------------------- */
+.svc-list {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-5);
+}
+.svc-list--two {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 0;
+}
+@media (max-width: 800px) {
+  .svc-list--two {
+    grid-template-columns: 1fr;
+  }
+}
+.svc-list__item {
+  position: relative;
+  padding-left: var(--space-5);
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+}
+.svc-list__item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* --- Deliverables split ------------------------------------------------ */
+.svc-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 1rem + 4vw, 4rem);
+  align-items: start;
+}
+.svc-split__copy h2 {
+  font-size: var(--fs-h2);
+  max-width: 20ch;
+}
+.svc-split__intro {
+  margin-top: var(--space-4);
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+}
+.svc-split__note {
+  margin-top: var(--space-5);
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--color-accent);
+  font-size: var(--fs-sm);
+}
+.svc-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+.svc-ticks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.svc-ticks__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--fs-sm);
+}
+.svc-ticks__item:first-child {
+  padding-top: 0;
+}
+.svc-ticks__item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.svc-ticks__item svg {
+  flex: none;
+  margin-top: 0.28em;
+  color: var(--color-accent);
+}
+@media (max-width: 880px) {
+  .svc-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Two-column duo (who for / risk areas, related blocks) ------------- */
+.svc-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 1rem + 4vw, 4rem);
+  align-items: start;
+}
+.svc-duo h2 {
+  font-size: var(--fs-h3);
+  max-width: 22ch;
+}
+.svc-duo__body {
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
+@media (max-width: 880px) {
+  .svc-duo {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Risk area tags ---------------------------------------------------- */
+.svc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-5);
+}
+.svc-tags__item {
+  padding: 0.45rem 0.9rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--color-heading);
+}
+
+/* --- Related services / reading --------------------------------------- */
+.svc-related__title {
+  font-size: var(--fs-h3);
+}
+.svc-related {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-5);
+  display: grid;
+  gap: var(--space-3);
+}
+.svc-related__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-heading);
+  transition: transform var(--dur-med) var(--ease-out),
+    box-shadow var(--dur-med) var(--ease-out),
+    border-color var(--dur-med) var(--ease-out);
+}
+.svc-related__link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--ar-border-strong);
+  color: var(--color-primary);
+}
+.svc-related__link svg {
+  flex: none;
+  color: var(--color-accent);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.svc-related__link:hover svg {
+  transform: translateX(3px);
+}
+.svc-related__link--stacked {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.svc-related__label {
+  line-height: 1.4;
+}
+.svc-related__note {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
+/* --- References -------------------------------------------------------- */
+.svc-refs {
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  max-width: 70ch;
+}
+.svc-refs__title {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-4);
+}
+.svc-refs ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  font-size: var(--fs-sm);
+}
+.svc-refs a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: var(--fw-medium);
+}
+.svc-refs a:hover {
+  color: var(--color-accent);
+}
+.svc-refs__note {
+  color: var(--color-muted);
+}

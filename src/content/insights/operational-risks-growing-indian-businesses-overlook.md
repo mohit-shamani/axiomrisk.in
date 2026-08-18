@@ -141,8 +141,8 @@ step back tends to surface them more reliably than continuous monitoring does.
 
 If you want a structured way to work through this, our [approach to risk
 assessment](/approach) sets out how we map exposure and prioritise what matters, and
-our [operational risk advisory services](/services) cover process reviews, supplier
-dependency assessment and single points of failure.
+our [operational risk management services](/services/operational-risk-advisory) cover
+process reviews, supplier dependency assessment and single points of failure.
 
 For a faster starting point, our free [two-minute risk health check](/risk-health-check)
 covers several of these areas and gives an indicative view of where to look first.

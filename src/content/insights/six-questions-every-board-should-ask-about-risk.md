@@ -136,8 +136,9 @@ responses that were never tested.
 
 Where the difficulty is structural — no register, no thresholds, no dependency map —
 the fix is a framework rather than better questions. Our
-[enterprise risk management work](/services) covers exactly that, and
-[our approach](/approach) sets out how we get there without producing something nobody
+[enterprise risk management services](/services/enterprise-risk-management) cover
+exactly that, and [our approach](/approach) sets out how we get there without
+producing something nobody
 maintains. If you want a quick, private read on where you stand first, the free
 [two-minute risk health check](/risk-health-check) covers ownership, reporting,
 dependency and review.

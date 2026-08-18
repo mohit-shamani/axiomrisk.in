@@ -1,11 +1,13 @@
 import App from './App'
 import Home from './pages/Home'
 import Services from './pages/Services'
+import ServiceLanding from './pages/ServiceLanding'
 import Approach from './pages/Approach'
 import About from './pages/About'
 import Insights from './pages/Insights'
 import InsightArticle from './pages/InsightArticle'
 import { getPostStaticPaths } from './lib/posts'
+import { serviceLandingSlugs } from './config/serviceLanding'
 import Contact from './pages/Contact'
 import Resources from './pages/Resources'
 import RiskHealthCheck from './pages/RiskHealthCheck'
@@ -24,6 +26,14 @@ export const routes = [
     children: [
       { index: true, element: <Home /> },
       { path: 'services', element: <Services /> },
+      {
+        // Dedicated commercial service pages. Prerendered from the slugs in
+        // src/config/serviceLanding.js, so adding a service page is a config
+        // entry rather than a route edit.
+        path: 'services/:serviceSlug',
+        element: <ServiceLanding />,
+        getStaticPaths: () => serviceLandingSlugs.map((s) => 'services/' + s),
+      },
       { path: 'approach', element: <Approach /> },
       { path: 'about', element: <About /> },
       { path: 'insights', element: <Insights /> },

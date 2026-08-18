@@ -154,8 +154,9 @@ not months, and it tells you how much structure you actually need.
 From there, the framework can be built to fit — enough structure to make risk visible
 and comparable, and no more than the business will sustain.
 
-If you are weighing this up, our [risk advisory services](/services) cover enterprise
-risk framework design as well as focused assessments for organisations that want to
+If you are weighing this up, our
+[enterprise risk management services](/services/enterprise-risk-management) cover
+framework design as well as focused assessments for organisations that want to
 establish a baseline first. If you would rather talk it through before deciding on
 scope, [book a consultation](/contact) — the initial conversation carries no
 obligation.

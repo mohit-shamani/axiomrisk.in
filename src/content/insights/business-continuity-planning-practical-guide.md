@@ -155,6 +155,6 @@ From there the same structure extends to the next activity, and the next.
 Our free [two-minute risk health check](/risk-health-check) includes whether a plan
 exists and whether it has been tested in the last year — a quick way to see where you
 stand. For the full picture, our
-[business continuity and crisis planning services](/services) cover impact analysis,
-plan design and facilitated testing, or you can
+[business continuity planning services](/services/business-continuity-crisis-planning)
+cover impact analysis, plan design and facilitated testing, or you can
 [book a consultation](/contact) to talk it through first.

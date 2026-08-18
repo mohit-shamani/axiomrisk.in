@@ -147,7 +147,9 @@ If you are less certain whether a register is the right first step, our free
 [two-minute risk health check](/risk-health-check) covers visibility and ownership
 alongside continuity and compliance, and points at whichever area is weakest. For
 background on how a register fits into a wider framework, see
-[what enterprise risk management actually means](/insights/what-is-enterprise-risk-management).
+[what enterprise risk management actually means](/insights/what-is-enterprise-risk-management),
+or how the register is built as one component of our
+[enterprise risk management services](/services/enterprise-risk-management).
 
 And if you would like the structure designed around your business rather than adapted
 from a template, [book a consultation](/contact) — the first conversation carries no

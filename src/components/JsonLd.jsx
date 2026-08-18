@@ -96,6 +96,54 @@ export function collectionPageSchema(site, meta, posts) {
   }
 }
 
+/**
+ * Generic BreadcrumbList from [{ name, path }]. Shared by article and
+ * service pages so the two cannot drift apart.
+ */
+export function breadcrumbListSchema(site, crumbs) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: new URL(c.path, site.url).href,
+    })),
+  }
+}
+
+/**
+ * Service schema for a dedicated service landing page.
+ *
+ * Only fields the page genuinely supports are emitted. No aggregateRating,
+ * no priced offers, no award or certification properties, because the site
+ * asserts none of those.
+ */
+export function serviceSchema(site, page) {
+  const url = new URL('/services/' + page.slug, site.url).href
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': url + '#service',
+    name: page.h1,
+    serviceType: page.serviceType,
+    description: page.metaDescription,
+    url,
+    provider: { '@id': site.url + '/#organization' },
+    areaServed: { '@type': 'Country', name: site.location },
+    audience: { '@type': 'BusinessAudience', name: 'Businesses in India' },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: page.deliverables.heading,
+      itemListElement: page.deliverables.items.map((d) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: d },
+      })),
+    },
+  }
+}
+
 /** Build a schema.org FAQPage object from [{ q, a }]. */
 export function faqPageSchema(faqs) {
   return {
