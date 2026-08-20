@@ -61,7 +61,8 @@ export default function Resources() {
                 subject="Risk Register Template — download request"
                 extraFields={{ Resource: 'Risk Register Template' }}
                 submitLabel="Get the template"
-                successMessage="Thank you — your template is ready below."
+                successMessage="Thank you — your template is ready to download."
+                successNote="Use the button below to download it now."
               >
                 <a
                   className="btn btn--accent resource-card__download"

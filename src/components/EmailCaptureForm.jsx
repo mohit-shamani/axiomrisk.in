@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CONTACT_EMAIL } from '../config/site'
 import { isValidEmail, normaliseEmail } from '../lib/validation'
@@ -19,6 +19,7 @@ export default function EmailCaptureForm({
   showCompany = true,
   submitLabel = 'Send it to me',
   successMessage = 'Thank you — your report is on its way.',
+  successNote = 'Check your email for a copy.',
   idPrefix = 'capture',
   children,
 }) {
@@ -28,9 +29,28 @@ export default function EmailCaptureForm({
   const [error, setError] = useState('') // validation only
   const [failure, setFailure] = useState(null) // submission only
   const [status, setStatus] = useState('idle') // idle | submitting | success
+  const [submittedEmail, setSubmittedEmail] = useState('')
+  const successRef = useRef(null)
+
+  // Bring the confirmation into view once it replaces the form. Without this
+  // the success block can render off-screen — on the health check it sits far
+  // down the page — and someone who cannot see it submits a second time.
+  useEffect(() => {
+    if (status !== 'success' || !successRef.current) return
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    successRef.current.scrollIntoView({
+      behavior: reduced ? 'auto' : 'smooth',
+      block: 'center',
+    })
+  }, [status])
 
   async function handleSubmit(event) {
     event.preventDefault()
+
+    // Guard the handler itself, not just the button. A disabled button still
+    // leaves Enter-in-a-text-input as a way to fire submit twice.
+    if (status === 'submitting' || status === 'success') return
+
     setFailure(null)
 
     const cleaned = normaliseEmail(email)
@@ -58,6 +78,7 @@ export default function EmailCaptureForm({
     })
 
     if (result.ok) {
+      setSubmittedEmail(cleaned)
       setStatus('success')
     } else {
       setStatus('idle')
@@ -67,7 +88,7 @@ export default function EmailCaptureForm({
 
   if (status === 'success') {
     return (
-      <div className="capture__success" role="status">
+      <div className="capture__success" role="status" ref={successRef} tabIndex={-1}>
         <svg width="24" height="24" viewBox="0 0 26 26" fill="none" aria-hidden="true">
           <circle cx="13" cy="13" r="12" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
           <path
@@ -80,6 +101,11 @@ export default function EmailCaptureForm({
         </svg>
         <div>
           <p className="capture__success-text">{successMessage}</p>
+          <p className="capture__success-note">
+            {successNote}{' '}
+            Sent to <strong>{submittedEmail}</strong> — check your spam folder if
+            it does not arrive, and there is no need to submit the form again.
+          </p>
           {children}
         </div>
       </div>

@@ -1,5 +1,5 @@
 /**
- * Builds public/downloads/axiomrisk-risk-register-template.xlsx from the CSV
+ * Builds public/risk-register-template.xlsx from the CSV
  * sources in templates/risk-register/.
  *
  * The CSVs stay the editable source of truth; this only handles presentation
@@ -19,7 +19,7 @@ import ExcelJS from 'exceljs'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const SRC = path.join(ROOT, 'templates', 'risk-register')
-const OUT = path.join(ROOT, 'public', 'downloads', 'axiomrisk-risk-register-template.xlsx')
+const OUT = path.join(ROOT, 'public', 'risk-register-template.xlsx')
 
 // Brand tokens (ARGB for Excel)
 const SLATE = 'FF1E3A5F'
@@ -193,5 +193,5 @@ fs.mkdirSync(path.dirname(OUT), { recursive: true })
 await wb.xlsx.writeFile(OUT)
 
 const kb = (fs.statSync(OUT).size / 1024).toFixed(1)
-console.log(`[xlsx] wrote public/downloads/axiomrisk-risk-register-template.xlsx — ${kb} KB`)
+console.log(`[xlsx] wrote public/risk-register-template.xlsx — ${kb} KB`)
 console.log(`[xlsx] sheets: ${wb.worksheets.map((w) => `${w.name} (${w.rowCount} rows)`).join(', ')}`)

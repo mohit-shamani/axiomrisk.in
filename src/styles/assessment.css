@@ -314,7 +314,25 @@
 }
 .capture__success-text {
   font-size: var(--fs-body);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-semibold);
+}
+.capture__success:focus {
+  outline: none;
+}
+/* Secondary line: tells the visitor where to look next, so the confirmation
+   reads as finished rather than as a step that may not have worked. */
+.capture__success-note {
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--color-body);
+}
+.capture__success-note strong {
+  font-weight: var(--fw-semibold);
+  word-break: break-word;
+}
+.capture__success .resource-card__download {
+  margin-top: var(--space-5);
 }
 
 /* --- Resources page ----------------------------------------------------- */
