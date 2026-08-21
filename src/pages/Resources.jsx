@@ -58,6 +58,7 @@ export default function Resources() {
             <div className="card__foot resource-card__gate">
               <EmailCaptureForm
                 idPrefix="template"
+                formName="risk_register_template"
                 subject="Risk Register Template — download request"
                 extraFields={{ Resource: 'Risk Register Template' }}
                 submitLabel="Get the template"

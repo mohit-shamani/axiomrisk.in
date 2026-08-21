@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import Seo from '../components/Seo'
 import Container from '../components/Container'
@@ -15,6 +15,7 @@ import {
   totalScore,
   scoreByArea,
 } from '../config/assessment'
+import { trackLead } from '../lib/analytics'
 
 export default function RiskHealthCheck() {
   const reduce = useReducedMotion()
@@ -38,6 +39,13 @@ export default function RiskHealthCheck() {
     setStep(0)
     setStage('intro')
   }
+
+  // Assessment completed and results shown. Keyed on `stage` rather than fired
+  // inside choose() so it cannot double-count, and so retaking the check
+  // (which returns to 'intro' first) is counted once per completion.
+  useEffect(() => {
+    if (stage === 'result') trackLead('risk_health_check')
+  }, [stage])
 
   const score = totalScore(answers)
   const band = getBand(score)
@@ -209,6 +217,7 @@ export default function RiskHealthCheck() {
                   </p>
                   <EmailCaptureForm
                     idPrefix="rhc"
+                    formName="risk_health_check_report"
                     subject={`Risk Health Check — ${band.name} (${score}/${MAX_SCORE})`}
                     extraFields={submissionFields}
                     submitLabel="Send me the report"

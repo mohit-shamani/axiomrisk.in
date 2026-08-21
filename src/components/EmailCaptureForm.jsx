@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { CONTACT_EMAIL } from '../config/site'
 import { isValidEmail, normaliseEmail } from '../lib/validation'
 import { submitToWeb3Forms, failureMessage } from '../lib/web3forms'
+import { trackLead } from '../lib/analytics'
 
 /**
  * Compact email capture wired to Web3Forms.
@@ -20,6 +21,9 @@ export default function EmailCaptureForm({
   submitLabel = 'Send it to me',
   successMessage = 'Thank you — your report is on its way.',
   successNote = 'Check your email for a copy.',
+  // GA4 form_name for the generate_lead event. Required: this component backs
+  // more than one lead source, and a shared name would merge them in reporting.
+  formName,
   idPrefix = 'capture',
   children,
 }) {
@@ -80,6 +84,7 @@ export default function EmailCaptureForm({
     if (result.ok) {
       setSubmittedEmail(cleaned)
       setStatus('success')
+      if (formName) trackLead(formName)
     } else {
       setStatus('idle')
       setFailure(result.kind)

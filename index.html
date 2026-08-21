@@ -9,6 +9,15 @@
          injects a unique one at build time. A hardcoded one would ship as a
          duplicate on every prerendered page. See src/components/Seo.jsx -->
     <meta name="apple-mobile-web-app-title" content="AxiomRisk" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y1ZQP3E6Y3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Y1ZQP3E6Y3', { send_page_view: false });
+    </script>
   </head>
   <body>
     <div id="root"></div>

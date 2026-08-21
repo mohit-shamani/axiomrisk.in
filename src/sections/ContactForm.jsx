@@ -3,6 +3,7 @@ import { CONTACT_EMAIL } from '../config/site'
 import { contactTopics } from '../config/content'
 import { isValidEmail, normaliseEmail } from '../lib/validation'
 import { submitToWeb3Forms, failureMessage } from '../lib/web3forms'
+import { trackLead } from '../lib/analytics'
 
 const EMPTY = {
   name: '',
@@ -71,6 +72,7 @@ export default function ContactForm() {
     if (result.ok) {
       setStatus('success')
       setValues(EMPTY)
+      trackLead('contact')
     } else {
       setStatus('idle')
       setFailure(result.kind)
