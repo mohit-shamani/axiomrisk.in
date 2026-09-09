@@ -1,10 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { site, navLinks, legalLinks, primaryCta } from '../config/site'
 import Logo from './Logo'
 import Button from './Button'
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const { pathname } = useLocation()
+  const isInternationalPage = pathname.replace(/\/$/, '') === '/international'
+  const description = isInternationalPage
+    ? 'Risk advisory & management consulting for businesses navigating complex and international markets.'
+    : 'Risk advisory & management consulting for businesses across India.'
 
   return (
     <footer className="footer">
@@ -28,9 +33,7 @@ export default function Footer() {
             <Logo tone="light" />
           </Link>
           <p className="footer__tagline">{site.tagline}</p>
-          <p className="footer__blurb">
-            Risk advisory &amp; management consulting for businesses across India.
-          </p>
+          <p className="footer__blurb">{description}</p>
         </div>
 
         <nav className="footer__col" aria-label="Footer">
