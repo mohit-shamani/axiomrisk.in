@@ -39,6 +39,12 @@ export const seo = {
       'practical advice.',
     path: '/about',
   },
+  international: {
+    title: 'International Risk Advisory | AxiomRisk',
+    description:
+      'Risk advisory and management consulting for businesses operating across complex and international markets. Explore enterprise, operational, strategic, compliance and business continuity advisory services from AxiomRisk.',
+    path: '/international',
+  },
   insights: {
     title: 'Insights | Risk Management Perspectives — AxiomRisk',
     description:

@@ -4,6 +4,7 @@ import Services from './pages/Services'
 import ServiceLanding from './pages/ServiceLanding'
 import Approach from './pages/Approach'
 import About from './pages/About'
+import International from './pages/International'
 import Insights from './pages/Insights'
 import InsightArticle from './pages/InsightArticle'
 import { getPostStaticPaths } from './lib/posts'
@@ -36,6 +37,7 @@ export const routes = [
       },
       { path: 'approach', element: <Approach /> },
       { path: 'about', element: <About /> },
+      { path: 'international', element: <International /> },
       { path: 'insights', element: <Insights /> },
       {
         // Every published article is prerendered to its own .html file.

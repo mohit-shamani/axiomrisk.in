@@ -11,33 +11,52 @@ const EMPTY = {
   company: '',
   phone: '',
   role: '',
+  country: '',
   topic: '',
   message: '',
-  botcheck: '', // honeypot — real users never fill this
+  botcheck: '', // honeypot; real users never fill this
 }
 
-function validate(v) {
+function validate(v, { requireCountry = false } = {}) {
   const e = {}
   if (!v.name.trim()) e.name = 'Please enter your full name.'
   if (!normaliseEmail(v.email)) e.email = 'Please enter your work email.'
   else if (!isValidEmail(v.email))
     e.email = 'Please enter a valid email address, for example name@company.com.'
   if (!v.company.trim()) e.company = 'Please enter your company or organisation.'
+  if (requireCountry && !v.country.trim()) e.country = 'Please enter your country.'
   if (!v.topic) e.topic = 'Please choose what you would like to discuss.'
   if (!v.message.trim()) e.message = 'Please tell us a little about your enquiry.'
   return e
 }
 
-export default function ContactForm() {
+export default function ContactForm({
+  topics = contactTopics,
+  formName = 'contact',
+  subjectPrefix = 'New enquiry',
+  submitLabel = 'Send Enquiry',
+  successMessage = "Thank you \u2014 we've received your enquiry and will be in touch shortly.",
+  includeCountry = false,
+  topicLabel = 'What would you like to discuss?',
+  roleLabel = 'Role',
+  roleHint = 'e.g. Founder, CFO, Operations, Compliance',
+  extraFields = {},
+  analytics = {},
+}) {
   const [values, setValues] = useState(EMPTY)
   const [errors, setErrors] = useState({}) // per-field validation
   const [failure, setFailure] = useState(null) // submission failure kind
   const [status, setStatus] = useState('idle') // idle | submitting | success
   const formRef = useRef(null)
+  const startedRef = useRef(false)
 
   const update = (field) => (event) => {
+    if (!startedRef.current) {
+      startedRef.current = true
+      if (analytics.formStart) analytics.formStart()
+    }
     setValues((v) => ({ ...v, [field]: event.target.value }))
-    // Clear a field's error as soon as the user starts correcting it
+    // Clear a field's error as soon as the user starts correcting it.
     setErrors((e) => (e[field] ? { ...e, [field]: undefined } : e))
     if (failure) setFailure(null)
   }
@@ -46,33 +65,39 @@ export default function ContactForm() {
     event.preventDefault()
     setFailure(null)
 
-    const found = validate(values)
+    const found = validate(values, { requireCountry: includeCountry })
     setErrors(found)
     if (Object.keys(found).length > 0) {
-      // Move focus to the first invalid field for keyboard and screen-reader users
+      // Move focus to the first invalid field for keyboard and screen-reader users.
       const first = formRef.current?.querySelector('[aria-invalid="true"]')
       first?.focus()
       return
     }
 
     setStatus('submitting')
+    const resolvedExtraFields =
+      typeof extraFields === 'function' ? extraFields(values) : extraFields
     const result = await submitToWeb3Forms({
-      subject: `New enquiry — ${values.topic} — ${values.name}`,
+      subject: `${subjectPrefix} \u2014 ${values.topic} \u2014 ${values.name}`,
       from_name: 'AxiomRisk website',
       'Full Name': values.name.trim(),
       'Work Email': normaliseEmail(values.email),
       'Company / Organisation': values.company.trim(),
-      Phone: values.phone.trim() || '—',
-      Role: values.role.trim() || '—',
+      Phone: values.phone.trim() || '\u2014',
+      Role: values.role.trim() || '\u2014',
+      ...(includeCountry ? { Country: values.country.trim() } : {}),
       'Discussion Topic': values.topic,
       Message: values.message.trim(),
+      ...resolvedExtraFields,
       botcheck: values.botcheck,
     })
 
     if (result.ok) {
       setStatus('success')
       setValues(EMPTY)
-      trackLead('contact')
+      startedRef.current = false
+      trackLead(formName)
+      if (analytics.submitSuccess) analytics.submitSuccess()
     } else {
       setStatus('idle')
       setFailure(result.kind)
@@ -93,7 +118,7 @@ export default function ContactForm() {
               strokeLinejoin="round"
             />
           </svg>
-          <p>Thank you — we've received your enquiry and will be in touch shortly.</p>
+          <p>{successMessage}</p>
         </div>
       </div>
     )
@@ -149,10 +174,21 @@ export default function ContactForm() {
             onChange={update('phone')}
             autoComplete="tel"
           />
+          {includeCountry && (
+            <Field
+              id="country"
+              label="Country"
+              required
+              value={values.country}
+              error={errors.country}
+              onChange={update('country')}
+              autoComplete="country-name"
+            />
+          )}
           <Field
             id="role"
-            label="Role"
-            hint="e.g. Founder, CFO, Operations, Compliance"
+            label={roleLabel}
+            hint={roleHint}
             value={values.role}
             onChange={update('role')}
             autoComplete="organization-title"
@@ -161,8 +197,7 @@ export default function ContactForm() {
 
           <div className={`field form__full${errors.topic ? ' field--invalid' : ''}`}>
             <label className="field__label" htmlFor="topic">
-              What would you like to discuss?{' '}
-              <span className="field__req" aria-hidden="true">*</span>
+              {topicLabel} <span className="field__req" aria-hidden="true">*</span>
             </label>
             <select
               id="topic"
@@ -174,8 +209,8 @@ export default function ContactForm() {
               aria-invalid={errors.topic ? 'true' : undefined}
               aria-describedby={errors.topic ? 'topic-error' : undefined}
             >
-              <option value="">Please select…</option>
-              {contactTopics.map((t) => (
+              <option value="">Please select\u2026</option>
+              {topics.map((t) => (
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>
@@ -211,7 +246,7 @@ export default function ContactForm() {
             className="btn btn--accent btn--lg"
             disabled={status === 'submitting'}
           >
-            {status === 'submitting' ? 'Sending…' : 'Send Enquiry'}
+            {status === 'submitting' ? 'Sending\u2026' : submitLabel}
           </button>
           <p className="form__required-note">
             <span className="field__req" aria-hidden="true">*</span> Required fields
