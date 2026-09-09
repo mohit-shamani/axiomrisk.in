@@ -49,6 +49,12 @@ export default function ContactForm({
   const [status, setStatus] = useState('idle') // idle | submitting | success
   const formRef = useRef(null)
   const startedRef = useRef(false)
+  // In-flight latch. Must be a ref, not `status`: two submit events dispatched
+  // in the same tick both read the pre-render value of state, so a state check
+  // lets a double submit through — sending two enquiries and, on the
+  // /international landing page, two conversion events. A ref updates
+  // synchronously and closes that window.
+  const inFlightRef = useRef(false)
 
   const update = (field) => (event) => {
     if (!startedRef.current) {
@@ -63,6 +69,11 @@ export default function ContactForm({
 
   async function handleSubmit(event) {
     event.preventDefault()
+
+    // Guard the handler, not just the button: a disabled submit button still
+    // leaves Enter-in-a-text-input as a way to fire this twice.
+    if (inFlightRef.current || status === 'success') return
+
     setFailure(null)
 
     const found = validate(values, { requireCountry: includeCountry })
@@ -74,6 +85,7 @@ export default function ContactForm({
       return
     }
 
+    inFlightRef.current = true
     setStatus('submitting')
     const resolvedExtraFields =
       typeof extraFields === 'function' ? extraFields(values) : extraFields
@@ -93,12 +105,17 @@ export default function ContactForm({
     })
 
     if (result.ok) {
+      // Latch stays closed: this form is replaced by the success panel.
       setStatus('success')
       setValues(EMPTY)
       startedRef.current = false
       trackLead(formName)
       if (analytics.submitSuccess) analytics.submitSuccess()
     } else {
+      // Released so the visitor can correct the problem and genuinely retry —
+      // a second attempt after a failure is a separate submission and should
+      // be counted as one if it succeeds.
+      inFlightRef.current = false
       setStatus('idle')
       setFailure(result.kind)
     }

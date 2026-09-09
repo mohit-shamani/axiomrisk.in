@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Seo from '../components/Seo'
+import OpenAiPixel from '../components/OpenAiPixel'
 import Section from '../components/Section'
 import Container from '../components/Container'
 import Reveal from '../components/Reveal'
@@ -8,6 +9,7 @@ import Button from '../components/Button'
 import ContactForm from '../sections/ContactForm'
 import { seo } from '../config/seo'
 import { trackEvent } from '../lib/analytics'
+import { trackOpenAiConversion } from '../lib/openaiPixel'
 
 const services = [
   {
@@ -167,6 +169,8 @@ export default function International() {
   return (
     <>
       <Seo {...seo.international} />
+      {/* Paid-acquisition measurement. This route only. */}
+      <OpenAiPixel />
 
       <div className="intl-hero">
         <Container size="wide">
@@ -365,11 +369,17 @@ export default function International() {
               topicLabel="Service Interested In"
               roleLabel="Role / Position"
               roleHint="e.g. Founder, CFO, Operations, Compliance"
-              successMessage="Thank you \u2014 we've received your consultation request and will be in touch shortly."
+              successMessage={"Thank you \u2014 we've received your consultation request and will be in touch shortly."}
               extraFields={utmFields}
               analytics={{
                 formStart: () => trackEvent('international_form_start', eventParams()),
-                submitSuccess: () => trackEvent('international_form_submit_success', eventParams()),
+                // Called from ContactForm's `if (result.ok)` branch only —
+                // after Web3Forms has confirmed the submission, never on click,
+                // validation, request start, HTTP error or API failure.
+                submitSuccess: () => {
+                  trackEvent('international_form_submit_success', eventParams())
+                  trackOpenAiConversion()
+                },
               }}
             />
           </Reveal>
