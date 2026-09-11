@@ -8,9 +8,9 @@
 //
 // Data source : AxiomRisk Website Pixel
 // Pixel ID    : NapjeP3rrE8W1A7FEYeAa5   (browser-safe, intended for client use)
-// Conversion  : AxiomRisk International Consultation Lead
+// Conversions : AxiomRisk Consultation Lead (lead_created)
+//               AxiomRisk International Consultation Lead
 //               custom_event_name = international_form_submit_success
-//               conversion event id 6aa14190fe1881a0b41e0cf71b992551
 //
 // Deliberately NOT implemented here: page_viewed. The optimisation event is
 // the confirmed form submission only.
@@ -94,7 +94,7 @@ function ensureQueue() {
 }
 
 /**
- * Fire the registered conversion.
+ * Fire the registered conversions.
  *
  * Call ONLY after the form service has confirmed success — see the caller in
  * src/pages/International.jsx, which is invoked from ContactForm's
@@ -106,6 +106,14 @@ export function trackOpenAiConversion() {
   if (!oaiq) return
 
   try {
+    // OpenAI's standard lead event. This is the oCPC optimization event.
+    oaiq('measure', 'lead_created', { type: 'customer_action' })
+  } catch {
+    // Keep the legacy custom event independent of a standard-event failure.
+  }
+
+  try {
+    // Preserve the existing custom event for its separate reporting history.
     oaiq('measure', 'custom', { type: 'custom' }, {
       custom_event_name: OPENAI_CONVERSION_EVENT,
     })
