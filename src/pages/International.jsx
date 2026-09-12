@@ -140,6 +140,45 @@ function utmFields() {
   )
 }
 
+const META_PIXEL_ID = '2032074647447191'
+
+function initializeMetaPixel() {
+  if (typeof window === 'undefined') return
+
+  if (!window.fbq) {
+    const fbq = function () {
+      return fbq.callMethod
+        ? fbq.callMethod.apply(fbq, arguments)
+        : fbq.queue.push(arguments)
+    }
+
+    window.fbq = fbq
+    window._fbq = fbq
+    fbq.push = fbq
+    fbq.loaded = true
+    fbq.version = '2.0'
+    fbq.queue = []
+
+    const script = document.createElement('script')
+    script.async = true
+    script.src = 'https://connect.facebook.net/en_US/fbevents.js'
+    document.head.appendChild(script)
+  }
+
+  if (!window.__axiomRiskMetaPixelInitialized) {
+    window.fbq('init', META_PIXEL_ID)
+    window.__axiomRiskMetaPixelInitialized = true
+  }
+
+  window.fbq('track', 'PageView')
+}
+
+function trackMetaLead() {
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    window.fbq('track', 'Lead')
+  }
+}
+
 export default function International() {
   const location = useLocation()
   const [currentSearch, setCurrentSearch] = useState(location.search)
@@ -148,6 +187,7 @@ export default function International() {
     const search = window.location.search
     setCurrentSearch(search)
     trackEvent('international_page_view', eventParams())
+    initializeMetaPixel()
   }, [])
 
   const trackCta = (placement) => {
@@ -379,6 +419,7 @@ export default function International() {
                 submitSuccess: () => {
                   trackEvent('international_form_submit_success', eventParams())
                   trackOpenAiConversion()
+                  trackMetaLead()
                 },
               }}
             />
